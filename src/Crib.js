@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CardHand extends Component {
+class Crib extends Component {
   render() {
         const { deck_id } = this.props;
         const { getCards } = this.props
@@ -9,7 +9,7 @@ class CardHand extends Component {
         const image = this.props.card.image
         console.log('Monday1b', code)
         console.log('Monday1c', image)
-        
+
         return (
           <div>
             <button onClick={() => this.props.getCards({deck_id})}>Get Cards</button>
@@ -21,4 +21,4 @@ class CardHand extends Component {
     }
 }
 
-export default CardHand
+export default Crib

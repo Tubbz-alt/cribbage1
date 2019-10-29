@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CardHand from './CardHand';
+import Crib from './Crib';
 
 class App extends Component {
   constructor(props) {
@@ -64,7 +64,7 @@ class App extends Component {
             <div className="container">
                 <h1>Cribbage Hand Tester</h1>
                 <p>Guess how many points this hand is worth.</p>
-                <CardHand deck_id={deck_id} getCards={this.getCards} card={card}/>
+                <Crib deck_id={deck_id} getCards={this.getCards} card={card}/>
             </div>
         );
     }
