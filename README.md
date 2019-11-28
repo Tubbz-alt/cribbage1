@@ -1,17 +1,17 @@
-# React Tutorial
+# Cribbage Tester
 
-Learn the fundamentals of React, including simple and class components, state, props, and submitting form data.
+Test your ability to add up the points of a random cribbage hand and then compare to the actual number of points.
 
-### [View the demo](https://taniarascia.github.io/react-tutorial/) | [Read the tutorial](https://www.taniarascia.com/getting-started-with-react/)
+### [View the demo](https://thecoucher.github.io/cribbage1l/) |
 
 ## Purpose
 
-- Learn about essential React concepts and related terms, such as Babel, Webpack, JSX, components, props, state, and lifecycle.
-- Build a very simple React app that demonstrates the above concepts.
+- A fairly simple React app that is structured as a full deployable application
+- Gain experience in seeing runs, pairs and 15's in your hands
 
 ## Author
 
-- [Tania Rascia](https://www.taniarascia.com)
+- [Paul Couch](https://www.paulcouch.net)
 
 ## License
 

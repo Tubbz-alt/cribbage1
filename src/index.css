@@ -1,7 +1,7 @@
 /*! Primitive
  * A front end Sass boilerplate
  *
- * Author: Tania Rascia 
+ * Author: Tania Rascia
  */
 /* Variables
  * ===============
@@ -665,3 +665,6 @@ caption {
   =============== */
 /* Layout
   =============== */
+  .hand {
+    padding-right: 8px;
+  }
