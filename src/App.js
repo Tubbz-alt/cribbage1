@@ -51,6 +51,19 @@ class App extends Component {
           });
     }
 
+    // // fake results of a pair
+    // getHand(DeckId) {
+    //   const results = [
+    //     {value: '7', code: '7c', image: 'https://deckofcardsapi.com/static/img/7C.png'},
+    //     {value: '8', code: '8h', image: 'https://deckofcardsapi.com/static/img/8H.png'},
+    //     {value: '7', code: '7h', image: 'https://deckofcardsapi.com/static/img/7H.png'},
+    //     {value: 'ACE', code: 'as', image: 'https://deckofcardsapi.com/static/img/AS.png'}
+    //   ]
+    //   this.setState({
+    //      hand: results
+    //   })
+    // }
+
     getHand(DeckId) {
       // console.log('I am getting users hand from the deck: ', DeckId.deck_id)
       const url = 'https://deckofcardsapi.com/api/deck/' + DeckId.deck_id + '/draw/?count=4'
@@ -63,7 +76,7 @@ class App extends Component {
             // console.log('GET HAND result ', result)
             // console.log('CCCCCCC ')
             // console.log('GET HAND cards1', result)
-            // console.log('GET HAND cards2', result.cards)
+            console.log('GET HAND cards2', result.cards)
             this.setState({
                hand: result.cards
             })
