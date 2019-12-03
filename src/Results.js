@@ -134,7 +134,6 @@ checkForFifteenTriplets(cardHand, target=15) {
   for (let j=start+1; j< hand.length; j++) {
     // console.log('Checking with: ', hand, 'with target: ',target)
     let result = this.twoSum(hand,pairTarget)
-    let temp = []
     for (var p=0; p <result.length; p++) {
       let temp = [cardHand[j-1]]
       temp.push(cardHand[result[p][0] +j])
