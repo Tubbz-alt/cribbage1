@@ -53,12 +53,12 @@ class App extends Component {
     }
 
     // // fake results of a pair
-    getHand(DeckId) {
+    getHandTemp(DeckId) {
       const results = [
-        {value: '5', code: '5h', image: 'https://deckofcardsapi.com/static/img/5H.png', suit: 'hearts'},
-        {value: '6', code: '2d', image: 'https://deckofcardsapi.com/static/img/6D.png', suit: 'diamonds'},
-        {value: '7', code: '9c', image: 'https://deckofcardsapi.com/static/img/7C.png', suit: 'clubs'},
-        {value: '2', code: '2h', image: 'https://deckofcardsapi.com/static/img/2H.png', suit: 'hearts'},
+        {value: '5', code: '5h', image: 'https://deckofcardsapi.com/static/img/5H.png', suit: 'HEARTS'},
+        {value: '5', code: '5d', image: 'https://deckofcardsapi.com/static/img/5D.png', suit: 'DIAMONDS'},
+        {value: '5', code: '5s', image: 'https://deckofcardsapi.com/static/img/5S.png', suit: 'SPADES'},
+        {value: 'JACK', code: 'jc', image: 'https://deckofcardsapi.com/static/img/JC.png', suit: 'CLUBS'},
       ]
       this.setState({
          hand: results
@@ -77,7 +77,7 @@ class App extends Component {
  *
  *
  */
-    getHandTemp(DeckId) {
+    getHand(DeckId) {
       // console.log('I am getting users hand from the deck: ', DeckId.deck_id)
       const url = 'https://deckofcardsapi.com/api/deck/' + DeckId.deck_id + '/draw/?count=4'
       fetch(url)

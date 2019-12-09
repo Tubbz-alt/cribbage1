@@ -30,7 +30,7 @@ class Results extends Component {
         case 'ACE':
           copyOfCards[i].val = 1;
           break;
-        case 'Jack':
+        case 'JACK':
           copyOfCards[i].val = 11;
           break;
         case 'QUEEN':
@@ -87,19 +87,12 @@ convertToSuits(cards) {
 
 // checks for a run in a given array of cards
 findRun(hand, toCheck, runLength) {
-  console.log('hand ', hand)
-  console.log(`Checking run in: ${hand[toCheck[0]]} ${hand[toCheck[1]]} ${hand[toCheck[2]]}`)
   let runFound = true
   for (let k=0; k < runLength-1; k++) {
-    console.log('Checking... ', k)
-    console.log('Checking... ', hand[toCheck[k+1]].val + ' vs ' + hand[toCheck[k]].val)
     let result = hand[toCheck[k+1]].val-hand[toCheck[k]].val
-    console.log('Result: ', result)
     if (result === 1 ) {
-      console.log('AAAAAAAAA')
       continue
     } else {
-      console.log('BBBBBBBBBBB')
       runFound = false
     }
   }
@@ -258,14 +251,9 @@ checkForFifteenQuintet(cardHand, target=15) {
  checkForFlush(cardHand) {
    const copyOfHand = [...cardHand]
    // check for five card flush (all suits are equal)
-   if (copyOfHand.length === 5) {
-     console.log(copyOfHand[0].suit)
-     console.log(copyOfHand[1].suit)
-   }
    const checkAllEqual = arr => arr.every( card => card.suit === arr[0].suit )
 
    let allEqual = checkAllEqual(copyOfHand)
-   console.log(allEqual)
    if (allEqual) {
      return copyOfHand
    } else { // check for flush in forst four cards
@@ -276,6 +264,18 @@ checkForFifteenQuintet(cardHand, target=15) {
      }
    }
    return []
+ }
+
+ // checks if the hand as a Jack that matches the suit of the community card
+ checkForNibs(cards, card) {
+   let communitySuit = card.suit
+   let result = []
+   for (let i=0; i < cards.length; i++ ) {
+     if (cards[i].value === 'JACK' && cards[i].suit === communitySuit) {
+       result.push(card)
+     }
+   }
+   return result
  }
 
  /**
@@ -308,63 +308,44 @@ checkForFifteenQuintet(cardHand, target=15) {
       [2, 3, 4]
     ]
 
-    console.log('1111111 after sort: ', sortedCards)
-    console.log('Start...')
     let runOf5Found = true
 
     // start by looking for runs of 5
     for (let i=0; i < 4; i++) {
-      console.log('==== debug =====')
-      console.log(i)
-      console.log(i)
-      console.log(i)
       if (sortedCards[i+1].val-sortedCards[i].val !== 1 ) {
         runOf5Found = false
         break
       }
     }
-    console.log('Testing for 5 run - result: ', runOf5Found)
 
     // now look for runs of 4 using the 5 possible combos of 4 runs if there were no runs of 5
     let runOf4Found = false
     if (!runOf5Found) {
       for (let i=0; i< patternsOfFour.length; i++) {
         if (this.findRun(sortedCards, patternsOfFour[i], 4)) {
-          console.log('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFOUND set of 4')
           let test = '33'
-          console.log(`Found a run of ${sortedCards[patternsOfFour[i][0]]} ${sortedCards[patternsOfFour[i][1]]}  ${sortedCards[patternsOfFour[i][2]]}  ${sortedCards[patternsOfFour[i][3]]}`)
           runsResult.push([sortedCards[patternsOfFour[i][0]], sortedCards[patternsOfFour[i][1]], sortedCards[patternsOfFour[i][2]], sortedCards[patternsOfFour[i][3]]])
           runOf4Found = true
-          console.log('GGGGGGGGGGGGGGGGG ', runsResult)
-        } else {
-          console.log('Did NOT find a run of 4')
         }
-
       }
     }
-    console.log ('runOf4Found: ', runOf4Found)
     // now look for runs of 3 using the the 9 possible combos of 3 runs if there were no runs of 4
   let runOf3Found = false
   if (!runOf4Found) {
     for (let i=0; i< patternsOfThree.length; i++) {
       if (this.findRun(sortedCards, patternsOfThree[i], 3)) {
-        console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGFOUND set of 3')
-        console.log(`Found a run of ${sortedCards[patternsOfThree[i][0]].val} ${sortedCards[patternsOfThree[i][1]].val}  ${sortedCards[patternsOfThree[i][2]].val}`)
         runsResult.push([sortedCards[patternsOfThree[i][0]], sortedCards[patternsOfThree[i][1]], sortedCards[patternsOfThree[i][2]]])
         runsResult.description='fred'
         runsResult.score = 3
         runOf3Found = true
-      } else {
-        console.log('Did NOT find a run of 3')
       }
-
     }
   }
     return runsResult
   }
 
 
- tallyTheScores(pairResult, fullSumsResult, runsResult) {
+ tallyTheScores(pairResult, fullSumsResult, runsResult, nibsResult) {
    let score = 0
    for (let i=0; i < pairResult.length; i++) {
      score = score + pairResult[i].score
@@ -375,19 +356,20 @@ checkForFifteenQuintet(cardHand, target=15) {
    for (let i=0; i < runsResult.length; i++) {
      score = score + runsResult[i].length
    }
-
-
-
-   console.log('Tally of the scores: ', score)
+   if (nibsResult.length>0) {
+     console.log('PPPPPPPPPPPPP added a nib score ', nibsResult.length)
+     score = score + 1
+   }
    return score
  }
 
 render() {
         let pairResults = []
-        const { cards, card } = this.props;
-        let displayPairs, displaySums, displayRuns, displayFlush
+        const {cards, card}  = this.props
+
+        let displayPairs, displaySums, displayRuns, displayFlush, displayNibs
         let showResults = this.state.showResults
-        let fullSumsResult, flushResult, runsResult
+        let fullSumsResult, flushResult, runsResult, nibsResult
         let fullHand = [...cards]
         fullHand.push(card)
         let totalScore = 0
@@ -431,13 +413,21 @@ render() {
           runsResult = this.checkForRuns(fullHand)
           console.log('======> fullHand: ', fullHand)
           console.log('******  R U N S    T E S T I N G   ')
+          console.log('======> runsResult ', runsResult)
           console.log(runsResult)
+
+          nibsResult = this.checkForNibs(cards, card)
+          console.log('======> cards: ', cards)
+          console.log('======> card: ', card)
+          console.log('======> nibsResult ', nibsResult)
+          console.log('******  N I B S   T E S T I N G   ')
+          console.log(nibsResult)
 
 
 
           // add all the results of the sums
           fullSumsResult = [...sumResultPairs,  ...sumResultTriplets, ...sumResultQuartets, ...sumResultQuintet]
-          totalScore = this.tallyTheScores(pairResults, fullSumsResult, runsResult)
+          totalScore = this.tallyTheScores(pairResults, fullSumsResult, runsResult, nibsResult)
 
         }
         // // temp // TODO:
@@ -490,6 +480,18 @@ render() {
              </div>
           )}</div>
 
+          displayNibs = <div>{nibsResult.map(result =>
+            <div style={{ display: (showResults ? 'block' : 'none') }}>
+                <ul>
+                   <div className='result-row'>
+                     <div className='result-image'>
+                       <img className='hand-results' src={result.image} key={result.code} alt={result.code}/>
+                     </div>
+                     <div className='result-text'>Nibs - Points: 1</div>
+                   </div>
+                </ul>
+              </div>
+           )}</div>
          if (flushResult.length > 0) {
              displayFlush = <div style={{ display: (showResults ? 'block' : 'none') }}>
                <ul>
@@ -517,6 +519,7 @@ render() {
             {displaySums}
             {displayRuns}
             {displayFlush}
+            {displayNibs}
           </div>
        } else {
          return (
