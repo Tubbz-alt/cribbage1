@@ -9,7 +9,7 @@ class Hand extends Component {
         })
         return (
           <div>
-            <button onClick={() => this.props.getHand({deck_id})}>Get Hand</button>
+            <button className='freddy' onClick={() => this.props.getHand({deck_id})}>Get Hand</button>
             <div>{cardsImages}</div>
           </div>
         )

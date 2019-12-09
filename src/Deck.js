@@ -8,9 +8,9 @@ class Deck extends Component {
 
         return (
         <div>
-          <button onClick={() => this.props.turnOverCard({deck_id})}>Turn over card</button>
+          <button onClick={() => this.props.turnOverCard({deck_id})}>Community card</button>
           <div>
-            <img src={image} height='228px' width='162px' alt={code}/ >
+            <img src={image} height='180px' width='128px' alt={code}/ >
           </div>
         </div>
         )

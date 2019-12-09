@@ -184,8 +184,43 @@ html {
 
 body {
   color: #404040;
-  background: white;
+  background: #AAAAAA;
   font-size: 1rem; }
+
+
+div.results {
+  width: 75%
+}
+
+div.result-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+div.show-results {
+  display: flex;
+  justify-content: left;
+}
+
+div.result-image {
+  width: 50%;
+}
+
+div.result-text {
+  width: 50%;
+}
+
+div.bordered-red {
+  border-style: solid; border-width: 1px; color: red
+}
+div.bordered-blue {
+  border-style: solid; border-width: 2px; color: blue
+}
+img.hand-results {
+  height: 90px;
+  width: 64px;
+  padding-right: 2px;
+}
 
 p,
 ol,

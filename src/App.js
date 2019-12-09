@@ -47,24 +47,37 @@ class App extends Component {
             // console.log('GET Crib cards', result.cards[0])
             this.setState({
               crib: result.cards
+              //crib: {value: '5', code: '5h', image: 'https://deckofcardsapi.com/static/img/5H.png'}
             })
           });
     }
 
     // // fake results of a pair
-    // getHand(DeckId) {
-    //   const results = [
-    //     {value: '7', code: '7c', image: 'https://deckofcardsapi.com/static/img/7C.png'},
-    //     {value: '8', code: '8h', image: 'https://deckofcardsapi.com/static/img/8H.png'},
-    //     {value: '7', code: '7h', image: 'https://deckofcardsapi.com/static/img/7H.png'},
-    //     {value: 'ACE', code: 'as', image: 'https://deckofcardsapi.com/static/img/AS.png'}
-    //   ]
-    //   this.setState({
-    //      hand: results
-    //   })
-    // }
-
     getHand(DeckId) {
+      const results = [
+        {value: '5', code: '5h', image: 'https://deckofcardsapi.com/static/img/5H.png', suit: 'hearts'},
+        {value: '6', code: '2d', image: 'https://deckofcardsapi.com/static/img/6D.png', suit: 'diamonds'},
+        {value: '7', code: '9c', image: 'https://deckofcardsapi.com/static/img/7C.png', suit: 'clubs'},
+        {value: '2', code: '2h', image: 'https://deckofcardsapi.com/static/img/2H.png', suit: 'hearts'},
+      ]
+      this.setState({
+         hand: results
+      })
+    }
+
+/*
+ * [cards]
+ * card.code        eg. JS, AD, 9H
+ * card.image       eg.
+ * card.cardsImages
+ * card. suits      eg. SPADES, DIAMONDS, HEARTS
+ * card.value       eg. JACK, ACE, 9
+ * card.code        eg.
+ *
+ *
+ *
+ */
+    getHandTemp(DeckId) {
       // console.log('I am getting users hand from the deck: ', DeckId.deck_id)
       const url = 'https://deckofcardsapi.com/api/deck/' + DeckId.deck_id + '/draw/?count=4'
       fetch(url)
@@ -106,7 +119,6 @@ class App extends Component {
                 <p>Guess how many points this hand is worth.</p>
                 <Hand deck_id={deck_id} getHand={this.getHand} cards={cards}/>
                 <Deck deck_id={deck_id} turnOverCard={this.turnOverCard} card={card}/>
-                <h3>Results</h3>
                 <Results cards={cards} card={card}/>
             </div>
         );

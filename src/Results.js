@@ -5,10 +5,10 @@ class Results extends Component {
     super(props);
     this.state = {showResults: true}
   }
-  // remove the suits as they are not required for caluculatin sums
-  convertToIntegers(arr) {
-    var arrNoSuits = arr.map(card => card.value)
-    // console.log('111111111 ', arrNoSuits)
+
+// helper function to convert the card.value into an integer
+  convertToIntegers(cards) {
+    var arrNoSuits = cards.map(card => card.value)
     // change face cards and ace to numbers
     var arrInteger = arrNoSuits.map(function (card) {
       if (isNaN(card)) {
@@ -18,17 +18,41 @@ class Results extends Component {
       }
       return card
     })
-    console.log('222222222 ', arrInteger)
     return arrInteger
   }
 
+  // helper function to sort the cards and add 'val' property
+  sortCards(cards) {
+    let copyOfCards = [...cards]
+    for (let i=0; i < cards.length; i++) {
+
+      switch(copyOfCards[i].value) {
+        case 'ACE':
+          copyOfCards[i].val = 1;
+          break;
+        case 'Jack':
+          copyOfCards[i].val = 11;
+          break;
+        case 'QUEEN':
+          copyOfCards[i].val = 12;
+          break;
+        case 'KING':
+          copyOfCards[i].val = 13
+          break;
+        default:
+          copyOfCards[i].val = parseInt(copyOfCards[i].value,10);
+        }
+      }
+    copyOfCards.sort((a,b)=> a.val-b.val)
+    return copyOfCards
+  }
+
   /**
- * Returns sets of two numbers that sum to the target value
+ * Returns array of two numbers that sum to the target value
  * @param {number[]} arr - Array of integers
  * @param {number} target - Target value that the pairs should sum to
- * @return {Array<Array<number>>} Array of pairs of numbers
- * @example
- * []
+ * @return {Array<Array<number>>} Array of pairs of numbers where each number represents the poistion in the hand
+ * @example [[1,2], [3,5], [4,5]]
  *
  */
 twoSum(arr, target) {
@@ -36,23 +60,51 @@ twoSum(arr, target) {
 	for (var i = 0; i < arr.length; i++) {
 		for (var j = i + 1; j < arr.length; j++) {
 			if (arr[i] + arr[j] === target) {
-				// console.log(i,j)
         result.push([i, j]);
 			}
 		}
 	}
-	return result;
+  return result;
 }
 
-  // strip the cards array down to a simple array of characters
-  convertToChars(cards) {
-    let charArray = []
-    cards.map(function (card) {
-      return charArray.push(card.value)
-    })
-    return charArray
-  }
+// strip the cards array down to a simple array of characters
+convertToChars(cards) {
+  let charArray = []
+  cards.map(function (card) {
+    return charArray.push(card.value)
+  })
+  return charArray
+}
 
+// strip the cards array down to a simple array of suits
+convertToSuits(cards) {
+  let suitsArray = []
+  cards.map(function (card) {
+    return suitsArray.push(card.suit)
+  })
+  return suitsArray
+}
+
+// checks for a run in a given array of cards
+findRun(hand, toCheck, runLength) {
+  console.log('hand ', hand)
+  console.log(`Checking run in: ${hand[toCheck[0]]} ${hand[toCheck[1]]} ${hand[toCheck[2]]}`)
+  let runFound = true
+  for (let k=0; k < runLength-1; k++) {
+    console.log('Checking... ', k)
+    console.log('Checking... ', hand[toCheck[k+1]].val + ' vs ' + hand[toCheck[k]].val)
+    let result = hand[toCheck[k+1]].val-hand[toCheck[k]].val
+    console.log('Result: ', result)
+    if (result === 1 ) {
+      console.log('AAAAAAAAA')
+      continue
+    } else {
+      console.log('BBBBBBBBBBB')
+      runFound = false
+    }
+  }
+  return runFound
+}
   // quick and dirty way to count occurences of a character in an array
   countOcurrences(arr, c) {
     let count = 0
@@ -65,32 +117,47 @@ twoSum(arr, target) {
   }
 
   // gets pairs, triplets and quartets of cards in a hand
-  getPairs(hand, fullHand) {
-    console.log('Getting results... ', fullHand)
+  getPairs(fullHand) {
+    //debugger
+    // reduce the array to an array of chars
+    let charArray = this.convertToChars(fullHand)
     // creating aset removes duplicates.
-    const uniqueSet = new Set(hand)
-
+    const uniqueSet = new Set(charArray)
     // turn set back to array so that we have an
     // array of unique values in the hand
     const uniqueValues = [...uniqueSet]
     let finalResult = []
     // looping through 3 values - a, j and 3
     for (let i=0; i<uniqueValues.length; i++) {
-      let tempResult = []
-      let occurences = this.countOcurrences(hand, uniqueValues[i])
+      let result = []
+      let occurences = this.countOcurrences(charArray, uniqueValues[i])
       if (occurences > 1) {
         // get index of each one
-        for (let k=0; k < hand.length; k++) {
-          if (uniqueValues[i]===hand[k]) {
-            tempResult.push(fullHand[k])
+        for (let k=0; k < charArray.length; k++) {
+          if (uniqueValues[i]===charArray[k]) {
+            result.push(fullHand[k])
           }
         }
-      finalResult.push(tempResult)
+        let resultObj = {}
+        resultObj.result = result
+        let resultLength = result.length
+        if (resultLength === 2 ) {
+          resultObj.description = 'Pair'
+          resultObj.score = 2
+        }
+        else if (resultLength === 3 ) {
+          resultObj.description = 'Three of a kind'
+          resultObj.score = 6
+        } else if (resultLength === 4 ) {
+          resultObj.description = 'Four of a kind'
+          resultObj.score = 12
+        }
+        finalResult.push(resultObj)
       }
-  }
-  console.log('ZZZZZZZZ ', finalResult)
+    }
   return finalResult
 }
+
 /**
  * Returns sets of two cards that sum to the target value
  * @param {string[]} cardHand - Array of cards
@@ -101,12 +168,9 @@ twoSum(arr, target) {
  *
  */
 checkForFifteenPairs(cardHand, target=15) {
-  console.log('AAAAAAAAA ', cardHand)
+  // debugger
   let hand = this.convertToIntegers(cardHand)
-  console.log('BBBBBBBBBBhand ', hand)
-  console.log('BBBBBBBBBBfullHand ', cardHand)
   let result = this.twoSum(hand,target)
-  console.log('CCCCCCCCCC ', result)
   let pairs = []
   for (var i=0; i < result.length; i++) {
     pairs.push([cardHand[result[i][0]], cardHand[result[i][1]]])
@@ -124,15 +188,12 @@ checkForFifteenPairs(cardHand, target=15) {
  */
 checkForFifteenTriplets(cardHand, target=15) {
   let hand = this.convertToIntegers(cardHand)
-  console.log('111111111 ', cardHand)
-  console.log('222222222 ', hand)
   let pairTarget = target - hand[0]
   hand.shift()
   let start = 0;
   // let intermediateResult = []
   let triplets = []
   for (let j=start+1; j< hand.length; j++) {
-    // console.log('Checking with: ', hand, 'with target: ',target)
     let result = this.twoSum(hand,pairTarget)
     for (var p=0; p <result.length; p++) {
       let temp = [cardHand[j-1]]
@@ -158,21 +219,14 @@ checkForFifteenTriplets(cardHand, target=15) {
 checkForFifteenQuartets(cardHand, target=15) {
   let finalResult = []
   let hand = this.convertToIntegers(cardHand)
-  console.log('3333333333 ', cardHand)
-  console.log('4444444444 ', hand)
   for (let i=0; i < hand.length; i++) {
     let sum=hand[0]+hand[1]+hand[2]+hand[3]+hand[4]-hand[i]
-    console.log('=======> comparing ' + sum + ' to ' + target)
     if (sum === target) {
       let result = [...cardHand]
-      console.log('Quartet sum = 15 ', result)
-      console.log('i ', i)
       result.splice(i,1)
-      console.log('Quartet sum = 15 ', result)
       finalResult.push(result)
     }
   }
-  console.log('555555555 returning ',finalResult)
   return finalResult
 }
 
@@ -195,77 +249,279 @@ checkForFifteenQuintet(cardHand, target=15) {
   return finalResult
 }
 
+/**
+ * Returns sets of four or five cards that are the same suit
+ * @param {string[]} cardHand - Array of cardes
+ * @return {Array<Array<Card>>} Array of Cards representing a flush
+ *
+ */
+ checkForFlush(cardHand) {
+   const copyOfHand = [...cardHand]
+   // check for five card flush (all suits are equal)
+   if (copyOfHand.length === 5) {
+     console.log(copyOfHand[0].suit)
+     console.log(copyOfHand[1].suit)
+   }
+   const checkAllEqual = arr => arr.every( card => card.suit === arr[0].suit )
+
+   let allEqual = checkAllEqual(copyOfHand)
+   console.log(allEqual)
+   if (allEqual) {
+     return copyOfHand
+   } else { // check for flush in forst four cards
+     copyOfHand.pop()
+     allEqual = checkAllEqual(copyOfHand)
+     if (allEqual) {
+       return copyOfHand
+     }
+   }
+   return []
+ }
+
+ /**
+  * Returns sets of three, four or five cards that are sequential ie; a run
+  * @param {string[]} cardHand - Array of cardes
+  * @return {Array<Array<Card>>} Array of Cards representing a run
+  *
+  */
+  checkForRuns(cardHand) {
+    let sortedCards = this.sortCards(cardHand)
+    let runsResult = []
+    // all 4 combinations that a run of 4 can have
+    const patternsOfFour = [
+      [0,1,2,3],
+      [0,1,2,4],
+      [0,1,3,4],
+      [0,2,3,4],
+      [1,2,3,4]
+    ]
+    // all 9 combinations that a run of three can have
+    const patternsOfThree = [
+      [0, 1, 2],
+      [0, 1, 3],
+      [1, 2, 3],
+      [0, 1, 4],
+      [0, 2, 4],
+      [1, 2, 4],
+      [0, 3, 4],
+      [1, 3, 4],
+      [2, 3, 4]
+    ]
+
+    console.log('1111111 after sort: ', sortedCards)
+    console.log('Start...')
+    let runOf5Found = true
+
+    // start by looking for runs of 5
+    for (let i=0; i < 4; i++) {
+      console.log('==== debug =====')
+      console.log(i)
+      console.log(i)
+      console.log(i)
+      if (sortedCards[i+1].val-sortedCards[i].val !== 1 ) {
+        runOf5Found = false
+        break
+      }
+    }
+    console.log('Testing for 5 run - result: ', runOf5Found)
+
+    // now look for runs of 4 using the 5 possible combos of 4 runs if there were no runs of 5
+    let runOf4Found = false
+    if (!runOf5Found) {
+      for (let i=0; i< patternsOfFour.length; i++) {
+        if (this.findRun(sortedCards, patternsOfFour[i], 4)) {
+          console.log('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFOUND set of 4')
+          let test = '33'
+          console.log(`Found a run of ${sortedCards[patternsOfFour[i][0]]} ${sortedCards[patternsOfFour[i][1]]}  ${sortedCards[patternsOfFour[i][2]]}  ${sortedCards[patternsOfFour[i][3]]}`)
+          runsResult.push([sortedCards[patternsOfFour[i][0]], sortedCards[patternsOfFour[i][1]], sortedCards[patternsOfFour[i][2]], sortedCards[patternsOfFour[i][3]]])
+          runOf4Found = true
+          console.log('GGGGGGGGGGGGGGGGG ', runsResult)
+        } else {
+          console.log('Did NOT find a run of 4')
+        }
+
+      }
+    }
+    console.log ('runOf4Found: ', runOf4Found)
+    // now look for runs of 3 using the the 9 possible combos of 3 runs if there were no runs of 4
+  let runOf3Found = false
+  if (!runOf4Found) {
+    for (let i=0; i< patternsOfThree.length; i++) {
+      if (this.findRun(sortedCards, patternsOfThree[i], 3)) {
+        console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGFOUND set of 3')
+        console.log(`Found a run of ${sortedCards[patternsOfThree[i][0]].val} ${sortedCards[patternsOfThree[i][1]].val}  ${sortedCards[patternsOfThree[i][2]].val}`)
+        runsResult.push([sortedCards[patternsOfThree[i][0]], sortedCards[patternsOfThree[i][1]], sortedCards[patternsOfThree[i][2]]])
+        runsResult.description='fred'
+        runsResult.score = 3
+        runOf3Found = true
+      } else {
+        console.log('Did NOT find a run of 3')
+      }
+
+    }
+  }
+    return runsResult
+  }
+
+
+ tallyTheScores(pairResult, fullSumsResult, runsResult) {
+   let score = 0
+   for (let i=0; i < pairResult.length; i++) {
+     score = score + pairResult[i].score
+   }
+   for (let i=0; i < fullSumsResult.length; i++) {
+     score = score + 2
+   }
+   for (let i=0; i < runsResult.length; i++) {
+     score = score + runsResult[i].length
+   }
+
+
+
+   console.log('Tally of the scores: ', score)
+   return score
+ }
+
 render() {
         let pairResults = []
         const { cards, card } = this.props;
+        let displayPairs, displaySums, displayRuns, displayFlush
         let showResults = this.state.showResults
-
+        let fullSumsResult, flushResult, runsResult
         let fullHand = [...cards]
         fullHand.push(card)
+        let totalScore = 0
 
-        let charArray = this.convertToChars(fullHand)
-        pairResults = this.getPairs(charArray, fullHand)
+        if (fullHand.length === 5 ) {
+          pairResults = this.getPairs(fullHand)
+          console.log('======> fullHand: ', fullHand)
+          console.log('****** P A I R  T E S T I N G')
+          console.log(pairResults)
 
-        let sumResultPairs = this.checkForFifteenPairs(fullHand)
-        console.log('****** S U M   T E S T I N G - P A I R S ')
-        console.log(sumResultPairs)
+          // T H I S   I S  T H E   P R O B L E M
+          //let sumResultPairs = []
+          let sumResultPairs = this.checkForFifteenPairs(fullHand)
+          console.log('======> fullHand: ', fullHand)
+          console.log('****** S U M   T E S T I N G - P A I R S ')
+          console.log(sumResultPairs)
 
-        let sumResultTriplets = this.checkForFifteenTriplets(fullHand)
-        console.log('****** S U M   T E S T I N G - T R I P L E T S  ')
-        console.log(sumResultTriplets)
+          let sumResultTriplets = this.checkForFifteenTriplets(fullHand)
+          console.log('======> fullHand: ', fullHand)
+          console.log('****** S U M   T E S T I N G - T R I P L E T S  ')
+          console.log(sumResultTriplets)
 
-        let sumResultQuartets = this.checkForFifteenQuartets(fullHand)
-        console.log('****** S U M   T E S T I N G - Q U A R T E T S  ')
-        console.log(sumResultQuartets)
+          // let sumResultQuartets = []
+          let sumResultQuartets = this.checkForFifteenQuartets(fullHand)
+          console.log('======> fullHand: ', fullHand)
+          console.log('****** S U M   T E S T I N G - Q U A R T E T S  ')
+          console.log(sumResultQuartets)
 
-        let sumResultQuintet = this.checkForFifteenQuintet(fullHand)
-        console.log('****** S U M   T E S T I N G - Q U I N T E T  ')
-        console.log(sumResultQuintet)
+          //let sumResultQuintet = []
+          let sumResultQuintet = this.checkForFifteenQuintet(fullHand)
+          console.log('======> fullHand: ', fullHand)
+          console.log('****** S U M   T E S T I N G - Q U I N T E T  ')
+          console.log(sumResultQuintet)
 
-        // add all the results of the sums
-        let fullSumsResult = [...sumResultPairs,  ...sumResultTriplets, ...sumResultQuartets, sumResultQuintet]
-        console.log('TTTTTTTTTTTTTTT ', fullSumsResult)
+          //let sumResultQuintet = []
+          flushResult = this.checkForFlush(fullHand)
+          console.log('======> fullHand: ', fullHand)
+          console.log('****** F L U S H   T E S T I N G   ')
+          console.log(flushResult)
 
-        // temp // TODO:
-        if (!pairResults) {
-          pairResults = []
+          runsResult = this.checkForRuns(fullHand)
+          console.log('======> fullHand: ', fullHand)
+          console.log('******  R U N S    T E S T I N G   ')
+          console.log(runsResult)
+
+
+
+          // add all the results of the sums
+          fullSumsResult = [...sumResultPairs,  ...sumResultTriplets, ...sumResultQuartets, ...sumResultQuintet]
+          totalScore = this.tallyTheScores(pairResults, fullSumsResult, runsResult)
+
         }
+        // // temp // TODO:
+        // if (!pairResults) {
+        //   pairResults = []
+        // }
 
-        const showResultsCheckbox =  <div>
-          <label>Show results</label>
+        const showResultsCheckbox =  <div className='show-results'>
           <input type='checkbox' inline='true' checked={showResults} onClick={() => {this.setState({showResults: !showResults})}}/>
+          <div>Show results</div>
         </div>
 
-        //check that hand has been delt
-         if (fullHand.length > 1 ) {
-          return <div><div>{showResultsCheckbox}</div>
-          {pairResults.map(result =>
-            <div>
-              <div style={{ display: (showResults ? 'block' : 'none') }}>
+        if (fullHand.length === 5) {
+          displayPairs = <div>{pairResults.map(result =>
+          <div  style={{ display: (showResults ? 'block' : 'none') }}>
                 <ul>
-                   {result.map(card =>
-                     <img className='hand' src={card.image} key={card.code} alt={card.code} height="90" width="64"/>
-                   )}Pair - Points: {result.length}
-                </ul>
-              </div>
-              </div>
-           )}
-           {fullSumsResult.map(result =>
-             <div>
-               <div style={{ display: (showResults ? 'block' : 'none') }}>
-                 <ul>
-                    {result.map(card =>
-                      <img className='hand' src={card.image} key={card.code} alt={card.code} height="114" width="81"/>
-                    )}Sum to 15 - Points: {result.length}
+                <div className='result-row'>
+                 <div className='result-image'>{result.result.map(card =>
+                   <img className='hand-results' src={card.image} key={card.code} alt={card.code}/>
+                 )}</div>
+                 <div className='result-text'>{result.description} - Points: {result.score}</div>
+                 </div>
                  </ul>
-               </div>
-               </div>
-            )}
-           </div>
+          </div>
+        )}</div>
+
+        displaySums = <div>{fullSumsResult.map(result =>
+          <div style={{ display: (showResults ? 'block' : 'none') }}>
+              <ul>
+                 <div className='result-row'>
+                   <div className='result-image'>{result.map(card =>
+                     <img className='hand-results' src={card.image} key={card.code} alt={card.code}/>
+                   )}</div>
+                   <div className='result-text'>Sum to 15 - Points: 2</div>
+                 </div>
+              </ul>
+            </div>
+         )}</div>
+
+         displayRuns = <div>{runsResult.map(result =>
+           <div style={{ display: (showResults ? 'block' : 'none') }}>
+               <ul>
+                  <div className='result-row'>
+                    <div className='result-image'>{result.map(card =>
+                      <img className='hand-results' src={card.image} key={card.code} alt={card.code}/>
+                    )}</div>
+                    <div className='result-text'>Run - Points: {result.length}</div>
+                  </div>
+               </ul>
+             </div>
+          )}</div>
+
+         if (flushResult.length > 0) {
+             displayFlush = <div style={{ display: (showResults ? 'block' : 'none') }}>
+               <ul>
+                  <div className='result-row'>
+                    <div className='result-image'>{flushResult.map(card =>
+                      <img className='hand-results' src={card.image} key={card.code} alt={card.code}/>
+                    )}</div>
+                    <div className='result-text'>Flush - Points: 5</div>
+                  </div>
+               </ul>
+             </div>
+           } else {
+             displayFlush = <div/>
+           }
+         }
+
+
+         if (fullHand.length === 5 ) {
+          return <div>
+          <div>{showResultsCheckbox}</div>
+            <div style={{ display: (showResults ? 'block' : 'none') }}>
+              <h3>Result: Score = {totalScore}</h3>
+            </div>
+            {displayPairs}
+            {displaySums}
+            {displayRuns}
+            {displayFlush}
+          </div>
        } else {
          return (
            <div>
-           {showResultsCheckbox}
+             {showResultsCheckbox}
              <div>Nothing to display</div>
            </div>
 
