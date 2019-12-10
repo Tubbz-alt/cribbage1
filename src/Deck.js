@@ -6,12 +6,21 @@ class Deck extends Component {
         const code = this.props.card.code
         const image = this.props.card.image
 
+        let cardImage
+        if (image) {
+          cardImage = <div>
+            <img className='hand' src={image} alt={code}/ >
+          </div>
+        } else {
+          cardImage = <div>
+            <img className='hand' src='./card_back.jpg' alt={code}/ >
+          </div>
+        }
+
         return (
         <div>
           <button onClick={() => this.props.turnOverCard({deck_id})}>Community card</button>
-          <div>
-            <img src={image} height='180px' width='128px' alt={code}/ >
-          </div>
+          {cardImage}
         </div>
         )
     }

@@ -4,7 +4,22 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {showResults: true}
+    this.personName = 'Fred'
+    // all 10 combinations that a run of three can have
+    this.patternsOfThree = [
+      [0, 1, 2],
+      [0, 1, 3],
+      [1, 2, 3],
+      [0, 1, 4],
+      [0, 2, 4],
+      [1, 2, 4],
+      [0, 3, 4],
+      [1, 3, 4],
+      [2, 3, 4],
+      [0, 2, 3]
+    ]
   }
+
 
 // helper function to convert the card.value into an integer
   convertToIntegers(cards) {
@@ -56,10 +71,10 @@ class Results extends Component {
  *
  */
 twoSum(arr, target) {
-	var result = [];
+  var result = [];
 	for (var i = 0; i < arr.length; i++) {
 		for (var j = i + 1; j < arr.length; j++) {
-			if (arr[i] + arr[j] === target) {
+      if (arr[i] + arr[j] === target) {
         result.push([i, j]);
 			}
 		}
@@ -186,7 +201,7 @@ checkForFifteenTriplets(cardHand, target=15) {
   let start = 0;
   // let intermediateResult = []
   let triplets = []
-  for (let j=start+1; j< hand.length; j++) {
+  for (let j=start+1; j< hand.length+2; j++) {
     let result = this.twoSum(hand,pairTarget)
     for (var p=0; p <result.length; p++) {
       let temp = [cardHand[j-1]]
@@ -295,18 +310,21 @@ checkForFifteenQuintet(cardHand, target=15) {
       [0,2,3,4],
       [1,2,3,4]
     ]
-    // all 9 combinations that a run of three can have
-    const patternsOfThree = [
-      [0, 1, 2],
-      [0, 1, 3],
-      [1, 2, 3],
-      [0, 1, 4],
-      [0, 2, 4],
-      [1, 2, 4],
-      [0, 3, 4],
-      [1, 3, 4],
-      [2, 3, 4]
-    ]
+    // // all 10 combinations that a run of three can have
+    // const patternsOfThree = [
+    //   [0, 1, 2],
+    //   [0, 1, 3],
+    //   [1, 2, 3],
+    //   [0, 1, 4],
+    //   [0, 2, 4],
+    //   [1, 2, 4],
+    //   [0, 3, 4],
+    //   [1, 3, 4],
+    //   [2, 3, 4],
+    //   [0, 2, 3]
+    // ]
+
+    console.log(this.personName)
 
     let runOf5Found = true
 
@@ -332,9 +350,9 @@ checkForFifteenQuintet(cardHand, target=15) {
     // now look for runs of 3 using the the 9 possible combos of 3 runs if there were no runs of 4
   let runOf3Found = false
   if (!runOf4Found) {
-    for (let i=0; i< patternsOfThree.length; i++) {
-      if (this.findRun(sortedCards, patternsOfThree[i], 3)) {
-        runsResult.push([sortedCards[patternsOfThree[i][0]], sortedCards[patternsOfThree[i][1]], sortedCards[patternsOfThree[i][2]]])
+    for (let i=0; i< this.patternsOfThree.length; i++) {
+      if (this.findRun(sortedCards, this.patternsOfThree[i], 3)) {
+        runsResult.push([sortedCards[this.patternsOfThree[i][0]], sortedCards[this.patternsOfThree[i][1]], sortedCards[this.patternsOfThree[i][2]]])
         runsResult.description='fred'
         runsResult.score = 3
         runOf3Found = true
@@ -357,7 +375,6 @@ checkForFifteenQuintet(cardHand, target=15) {
      score = score + runsResult[i].length
    }
    if (nibsResult.length>0) {
-     console.log('PPPPPPPPPPPPP added a nib score ', nibsResult.length)
      score = score + 1
    }
    return score

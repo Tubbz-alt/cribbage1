@@ -55,10 +55,10 @@ class App extends Component {
     // // fake results of a pair
     getHandTemp(DeckId) {
       const results = [
-        {value: '5', code: '5h', image: 'https://deckofcardsapi.com/static/img/5H.png', suit: 'HEARTS'},
-        {value: '5', code: '5d', image: 'https://deckofcardsapi.com/static/img/5D.png', suit: 'DIAMONDS'},
-        {value: '5', code: '5s', image: 'https://deckofcardsapi.com/static/img/5S.png', suit: 'SPADES'},
-        {value: 'JACK', code: 'jc', image: 'https://deckofcardsapi.com/static/img/JC.png', suit: 'CLUBS'},
+        {value: '4', code: '4d', image: 'https://deckofcardsapi.com/static/img/4D.png', suit: 'DIAMONDS'},
+        {value: '2', code: '2c', image: 'https://deckofcardsapi.com/static/img/2C.png', suit: 'CLUBS'},
+        {value: '2', code: '2h', image: 'https://deckofcardsapi.com/static/img/2H.png', suit: 'HEARTS'},
+        {value: '3', code: '3h', image: 'https://deckofcardsapi.com/static/img/3H.png', suit: 'HEARTS'},
       ]
       this.setState({
          hand: results
@@ -89,7 +89,7 @@ class App extends Component {
             // console.log('GET HAND result ', result)
             // console.log('CCCCCCC ')
             // console.log('GET HAND cards1', result)
-            console.log('GET HAND cards2', result.cards)
+            // console.log('GET HAND cards2', result.cards)
             this.setState({
                hand: result.cards
             })

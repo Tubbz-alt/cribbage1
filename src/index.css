@@ -221,6 +221,11 @@ img.hand-results {
   width: 64px;
   padding-right: 2px;
 }
+img.hand {
+  height: 180px ;
+  width: 128px;
+  padding-right: 10px;
+}
 
 p,
 ol,
