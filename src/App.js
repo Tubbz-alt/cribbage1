@@ -9,14 +9,12 @@ class App extends Component {
       this.turnOverCard = this.turnOverCard.bind(this)
       this.getHand = this.getHand.bind(this)
       this.state = {
-        'deck': []
+        'deck': [],
+        'cardsLeft': 52
         //'showResults': false
       }
     }
     componentDidMount() {
-        // const url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=Seona+Dancing&format=json&origin=*&limit=1";
-        // console.log("Look at me. I mounted!!")
-
 
         // temporarily removed this to save bandwidth and resue the same deck
         const url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
@@ -25,10 +23,11 @@ class App extends Component {
               response.json()
             )
             .then(result => {
-                // console.log('STATE1111', this.state)
-                // console.log('BBBBBBB ', result)
+                console.log('STATE1111', this.state)
+                console.log('BBBBBBB ', result)
                 this.setState({
-                    deck: result
+                    deck: result,
+                    cardsLeft: result.remaining
                 })
             })
     }
@@ -46,8 +45,9 @@ class App extends Component {
             //console.log('CCCCCCC ', this)
             // console.log('GET Crib cards', result.cards[0])
             this.setState({
-              crib: result.cards
-              //crib: {value: '5', code: '5h', image: 'https://deckofcardsapi.com/static/img/5H.png'}
+              communityCard: result.cards[0],
+              cardsLeft: result.remaining
+              //communityCard: {value: '5', code: '5h', image: 'https://deckofcardsapi.com/static/img/5H.png'}
             })
           });
     }
@@ -85,23 +85,19 @@ class App extends Component {
               response.json()
           )
           .then(result => {
-            // console.log('GET HAND state', this.state)
-            // console.log('GET HAND result ', result)
-            // console.log('CCCCCCC ')
-            // console.log('GET HAND cards1', result)
-            // console.log('GET HAND cards2', result.cards)
             this.setState({
-               hand: result.cards
+               hand: result.cards,
+               cardsLeft: result.remaining
             })
           });
     }
 
     render() {
         const {deck_id} = this.state.deck;
-
+        const cardsLeft = this.state.cardsLeft
         let card
-        if (this.state.crib) {
-          card = this.state.crib[0]
+        if (this.state.communityCard) {
+          card = this.state.communityCard
         } else {
           card = {}
         }
@@ -117,8 +113,14 @@ class App extends Component {
             <div className="container">
                 <h1>Cribbage Hand Tester</h1>
                 <p>Guess how many points this hand is worth.</p>
-                <Hand deck_id={deck_id} getHand={this.getHand} cards={cards}/>
-                <Deck deck_id={deck_id} turnOverCard={this.turnOverCard} card={card}/>
+                <div className='result-row'>
+                  <div className='full-hand-cards'>
+                    <Hand deck_id={deck_id} getHand={this.getHand} cardsLeft={cardsLeft} cards={cards}/>
+                  </div>
+                  <div className='full-hand-community-card'>
+                    <Deck deck_id={deck_id} turnOverCard={this.turnOverCard} card={card}/>
+                  </div>
+                </div>
                 <Results cards={cards} card={card}/>
             </div>
         );

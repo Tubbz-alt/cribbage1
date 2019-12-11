@@ -19,7 +19,8 @@ class Deck extends Component {
 
         return (
         <div>
-          <button onClick={() => this.props.turnOverCard({deck_id})}>Community card</button>
+          <button onClick={() => this.props.turnOverCard({deck_id})}>Turn Over</button>
+          <div>Community Card</div>
           {cardImage}
         </div>
         )

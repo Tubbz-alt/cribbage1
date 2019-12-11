@@ -187,19 +187,23 @@ body {
   background: #AAAAAA;
   font-size: 1rem; }
 
+div.full-hand-cardsLeft {
+  width: 55%;
+}
+
+div.full-hand-community-card {
+  justify-content: left;
+  width: 45%;
+}
 
 div.results {
-  width: 75%
+  width: 75%;
+  border-style: solid; border-width: 1px; color: red
 }
 
 div.result-row {
   display: flex;
   justify-content: space-between;
-}
-
-div.show-results {
-  display: flex;
-  justify-content: left;
 }
 
 div.result-image {
@@ -210,13 +214,18 @@ div.result-text {
   width: 50%;
 }
 
+div.show-results {
+  display: flex;
+  justify-content: left;
+}
+
 div.bordered-red {
   border-style: solid; border-width: 1px; color: red
 }
 div.bordered-blue {
   border-style: solid; border-width: 2px; color: blue
 }
-img.hand-results {
+img.result-card {
   height: 90px;
   width: 64px;
   padding-right: 2px;

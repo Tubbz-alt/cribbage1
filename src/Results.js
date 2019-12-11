@@ -341,7 +341,6 @@ checkForFifteenQuintet(cardHand, target=15) {
     if (!runOf5Found) {
       for (let i=0; i< patternsOfFour.length; i++) {
         if (this.findRun(sortedCards, patternsOfFour[i], 4)) {
-          let test = '33'
           runsResult.push([sortedCards[patternsOfFour[i][0]], sortedCards[patternsOfFour[i][1]], sortedCards[patternsOfFour[i][2]], sortedCards[patternsOfFour[i][3]]])
           runOf4Found = true
         }
@@ -463,8 +462,9 @@ render() {
                 <ul>
                 <div className='result-row'>
                  <div className='result-image'>{result.result.map(card =>
-                   <img className='hand-results' src={card.image} key={card.code} alt={card.code}/>
-                 )}</div>
+                   <img className='result-card' src={card.image} key={card.code} alt={card.code}/>
+                    )}
+                  </div>
                  <div className='result-text'>{result.description} - Points: {result.score}</div>
                  </div>
                  </ul>
@@ -476,8 +476,9 @@ render() {
               <ul>
                  <div className='result-row'>
                    <div className='result-image'>{result.map(card =>
-                     <img className='hand-results' src={card.image} key={card.code} alt={card.code}/>
-                   )}</div>
+                     <img className='result-card' src={card.image} key={card.code} alt={card.code}/>
+                     )}
+                    </div>
                    <div className='result-text'>Sum to 15 - Points: 2</div>
                  </div>
               </ul>
@@ -489,8 +490,9 @@ render() {
                <ul>
                   <div className='result-row'>
                     <div className='result-image'>{result.map(card =>
-                      <img className='hand-results' src={card.image} key={card.code} alt={card.code}/>
-                    )}</div>
+                      <img className='result-card' src={card.image} key={card.code} alt={card.code}/>
+                      )}
+                    </div>
                     <div className='result-text'>Run - Points: {result.length}</div>
                   </div>
                </ul>
@@ -502,7 +504,7 @@ render() {
                 <ul>
                    <div className='result-row'>
                      <div className='result-image'>
-                       <img className='hand-results' src={result.image} key={result.code} alt={result.code}/>
+                       <img className='result-card' src={result.image} key={result.code} alt={result.code}/>
                      </div>
                      <div className='result-text'>Nibs - Points: 1</div>
                    </div>
@@ -514,8 +516,9 @@ render() {
                <ul>
                   <div className='result-row'>
                     <div className='result-image'>{flushResult.map(card =>
-                      <img className='hand-results' src={card.image} key={card.code} alt={card.code}/>
-                    )}</div>
+                      <img className='result-card' src={card.image} key={card.code} alt={card.code}/>
+                      )}
+                    </div>
                     <div className='result-text'>Flush - Points: 5</div>
                   </div>
                </ul>
