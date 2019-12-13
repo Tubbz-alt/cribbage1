@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Deck from './Deck'
 import Hand from './Hand'
 import Results from './Results'
+// import {getScore} from './cribbage.js'
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +17,8 @@ class App extends Component {
     }
     componentDidMount() {
 
+      // let test = getScore()
+      // console.log('-------------------> test ', test)
         // temporarily removed this to save bandwidth and resue the same deck
         const url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
         fetch(url)
