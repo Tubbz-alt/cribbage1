@@ -10,15 +10,12 @@ class App extends Component {
     this.getHand = this.getHand.bind(this)
     this.state = {
       'deck': [],
+      'hand': [],
       'cardsLeft': 52
-      //'showResults': false
+      //'showResults': false,
     }
   }
   componentDidMount() {
-
-    // let test = getScore()
-    // console.log('-------------------> test ', test)
-    // temporarily removed this to save bandwidth and resue the same deck
     const url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
     fetch(url)
       .then(response =>
@@ -27,6 +24,8 @@ class App extends Component {
       .then(result => {
         console.log('STATE1111', this.state)
         console.log('BBBBBBB ', result)
+        // handle error here TODO
+        // result.success hould be true
         this.setState({
           deck: result,
           cardsLeft: result.remaining
@@ -55,7 +54,7 @@ class App extends Component {
   }
 
   // // fake results of a pair
-  getHandTemp(DeckId) {
+  getHandTemp() {
     const results = [
       { value: '4', code: '4d', image: 'https://deckofcardsapi.com/static/img/4D.png', suit: 'DIAMONDS' },
       { value: '2', code: '2c', image: 'https://deckofcardsapi.com/static/img/2C.png', suit: 'CLUBS' },

@@ -22,7 +22,7 @@ class Results extends Component {
   }
 
   // tallyTheScores(pairResult, fullSumsResult, runsResult, nibsResult) {
-  tallyTheScores(pairResult, sumsResult, runsResult, nibsResult) {
+  tallyTheScores(pairResult, sumsResult, runsResult, flushResult, nibsResult) {
     let score = 0
     for (let i = 0; i < pairResult.length; i++) {
       score = score + pairResult[i].score
@@ -52,33 +52,29 @@ class Results extends Component {
 
     if (fullHand.length === 5) {
       pairResults = getPairs(fullHand)
-      console.log('****** P A I R  T E S T I N G')
+      console.log('****** P A I R   R E S U L T S')
       console.log(pairResults)
 
       sumsResult = getFifteenSums(fullHand)
-      console.log('****** T O T A L   S U M   T E S T I N G  ')
+      console.log('******  S U M   R E S U L T S')
       console.log(sumsResult)
 
-      //let sumResultQuintet = []
-      flushResult = getFlushes(fullHand)
-      console.log('****** F L U S H   T E S T I N G   ')
-      console.log(flushResult)
-
       runsResult = getRuns(fullHand)
-      console.log('******  R U N S    T E S T I N G   ')
+      console.log('******  R U N S  R E S U L T S')
       console.log('======> runsResult ', runsResult)
       console.log(runsResult)
 
+      flushResult = getFlushes(fullHand)
+      console.log('****** F L U S H   R E S U L T S')
+      console.log(flushResult)
+
       nibsResult = getNibs(cards, card)
-      console.log('======> cards: ', cards)
-      console.log('======> card: ', card)
+      console.log('******  N I B S   R E S U L T S')
       console.log('======> nibsResult ', nibsResult)
-      console.log('******  N I B S   T E S T I N G   ')
       console.log(nibsResult)
 
       // add all the results of the sums
-      // fullSumsResult = [...sumResultPairs, ...sumResultTriplets, ...sumResultQuartets, ...sumResultQuintet]
-      totalScore = this.tallyTheScores(pairResults, sumsResult, runsResult, nibsResult)
+      totalScore = this.tallyTheScores(pairResults, sumsResult, runsResult, flushResult, nibsResult)
 
     }
 

@@ -1,9 +1,9 @@
 
 // all 10 combinations that a run of three can have
 const patternsOfThree = [
-  [0, 1, 2],
-  [0, 1, 3],
-  [1, 2, 3],
+  [0, 1, 2],  // First, second and third card
+  [0, 1, 3],  // First, second and fourth card
+  [1, 2, 3],  // Second, third and fourth card...
   [0, 1, 4],
   [0, 2, 4],
   [1, 2, 4],
@@ -73,6 +73,11 @@ function sortCards(cards) {
   }
   copyOfCards.sort((a, b) => a.val - b.val)
   return copyOfCards
+}
+
+export function sumTwoNumbers(a, b) {
+  let sum = a + b
+  return sum
 }
 
 /**
@@ -209,11 +214,11 @@ function getFifteenPairs(cardHand, target = 15) {
   // debugger
   let hand = convertToIntegers(cardHand)
   let result = twoSum(hand, target)
-  let pairs = []
+  let fifteenPairs = []
   for (var i = 0; i < result.length; i++) {
-    pairs.push([cardHand[result[i][0]], cardHand[result[i][1]]])
+    fifteenPairs.push([cardHand[result[i][0]], cardHand[result[i][1]]])
   }
-  return pairs
+  return fifteenPairs
 }
 
 /**
@@ -231,19 +236,19 @@ function getFifteenTriplets(cardHand, target = 15) {
   hand.shift()
   let start = 0;
   // let intermediateResult = []
-  let triplets = []
+  let fifteenTriplets = []
   for (let j = start + 1; j < hand.length + 2; j++) {
     let result = twoSum(hand, pairTarget)
     for (var p = 0; p < result.length; p++) {
       let temp = [cardHand[j - 1]]
       temp.push(cardHand[result[p][0] + j])
       temp.push(cardHand[result[p][1] + j])
-      triplets.push(temp)
+      fifteenTriplets.push(temp)
     }
     pairTarget = target - hand[0]
     hand.shift()
   }
-  return triplets
+  return fifteenTriplets
 }
 
 /**
@@ -252,21 +257,21 @@ function getFifteenTriplets(cardHand, target = 15) {
  * @param {number} target - Target value that the 4 cards should sum to
  * @return {Array<Array<string>>} Array of quartets representing cards that sum to the target value
  * @example
- * [['qh', '3d', 'ad', 'as'], ['4s', '3h', '5s', '3h']
+ * [['qh', '3d', 'ad', 'as'], ['4s', '3h', '5s', '3h']]
  *
  */
 function getFifteenQuartets(cardHand, target = 15) {
-  let finalResult = []
+  let fifteenQuartets = []
   let hand = convertToIntegers(cardHand)
   for (let i = 0; i < hand.length; i++) {
     let sum = hand[0] + hand[1] + hand[2] + hand[3] + hand[4] - hand[i]
     if (sum === target) {
       let result = [...cardHand]
       result.splice(i, 1)
-      finalResult.push(result)
+      fifteenQuartets.push(result)
     }
   }
-  return finalResult
+  return fifteenQuartets
 }
 /**
  * Returns sets of five cards that sum to the target value
@@ -274,17 +279,17 @@ function getFifteenQuartets(cardHand, target = 15) {
  * @param {number} target - Target value that the 5 cards should sum to
  * @return {Array<Array<string>>} Array of quintets representing cards that sum to the target value
  * @example
- * [['qh', '3d', 'ad', 'as'], ['4s', '3h', '5s', '3h']
+ * [['qh', '2d', 'ad', 'as', 'ah']]
  *
  */
 function getFifteenQuintet(cardHand, target = 15) {
-  let finalResult = []
+  let fifteenQuartet = []
   let hand = convertToIntegers(cardHand)
   let sum = hand[0] + hand[1] + hand[2] + hand[3] + hand[4]
   if (sum === target) {
-    finalResult.push(cardHand)
+    fifteenQuartet.push(cardHand)
   }
-  return finalResult
+  return fifteenQuartet
 }
 
 /**
