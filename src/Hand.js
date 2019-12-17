@@ -2,8 +2,9 @@ import React from 'react';
 
 // Component Hand
 const Hand = (props) => {
-  const { deck_id } = props
+  // const deck_id = props.deck_id
   const cards = props.cards
+  const buttonText = props.buttonText
   const cardsLeft = props.cardsLeft
 
   let cardsImages
@@ -22,7 +23,7 @@ const Hand = (props) => {
   }
   return (
     <div>
-      <button onClick={() => props.getHand({ deck_id })}>Get Hand</button>
+      <button onClick={() => props.getHand()}>{buttonText}</button>
       <div>Cards remaining in deck: {cardsLeft}</div>
       <div>{cardsImages}</div>
     </div>

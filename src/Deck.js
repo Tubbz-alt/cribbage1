@@ -2,7 +2,7 @@ import React from 'react';
 
 // Component Deck
 const Deck = (props) => {
-  const { deck_id } = props
+  // const deck_id = props.deck_id
   const code = props.card.code
   const image = props.card.image
 
@@ -19,7 +19,7 @@ const Deck = (props) => {
 
   return (
     <div>
-      <button onClick={() => props.turnOverCard({ deck_id })}>Turn Over</button>
+      <button onClick={() => props.turnOverCard()}>Reveal New Card</button>
       <div>Community Card</div>
       {cardImage}
     </div>

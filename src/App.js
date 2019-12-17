@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       'deck': [],
       'hand': [],
+      'communityCard': '',
       'cardsLeft': 52
       //'showResults': false,
     }
@@ -23,19 +24,19 @@ class App extends Component {
       )
       .then(result => {
         console.log('STATE1111', this.state)
-        console.log('BBBBBBB ', result)
+        console.log('BBBBBBB deck_id ', result.deck_id)
         // handle error here TODO
         // result.success hould be true
         this.setState({
-          deck: result,
+          deck_id: result.deck_id,
           cardsLeft: result.remaining
         })
       })
   }
 
-  turnOverCard(DeckId) {
-    // console.log('I am getting first card from the deck: ', DeckId.deck_id)
-    const url = 'https://deckofcardsapi.com/api/deck/' + DeckId.deck_id + '/draw/?count=1'
+  turnOverCard() {
+    // console.log('I am getting first card from the deck: ', deck_id)
+    const url = 'https://deckofcardsapi.com/api/deck/' + this.state.deck_id + '/draw/?count=1'
     fetch(url)
       .then(response =>
         response.json()
@@ -78,9 +79,8 @@ class App extends Component {
    *
    *
    */
-  getHand(DeckId) {
-    // console.log('I am getting users hand from the deck: ', DeckId.deck_id)
-    const url = 'https://deckofcardsapi.com/api/deck/' + DeckId.deck_id + '/draw/?count=4'
+  getHand() {
+    const url = 'https://deckofcardsapi.com/api/deck/' + this.state.deck_id + '/draw/?count=4'
     fetch(url)
       .then(response =>
         response.json()
@@ -94,7 +94,7 @@ class App extends Component {
   }
 
   render() {
-    const { deck_id } = this.state.deck;
+    // const deck_id = this.state.deck_id;
     const cardsLeft = this.state.cardsLeft
     let card
     if (this.state.communityCard) {
@@ -110,16 +110,22 @@ class App extends Component {
       cards = []
     }
 
+    let buttonText = ''
+    if (cardsLeft === 52) {
+      buttonText = 'Reveal Cards'
+    } else {
+      buttonText = 'Get new cards'
+    }
     return (
       <div className="container">
         <h1>Cribbage Hand Tester</h1>
         <p>Guess how many points this hand is worth.</p>
         <div className='result-row'>
           <div className='full-hand-cards'>
-            <Hand deck_id={deck_id} getHand={this.getHand} cardsLeft={cardsLeft} cards={cards} />
+            <Hand getHand={this.getHand} cardsLeft={cardsLeft} cards={cards} buttonText={buttonText} />
           </div>
           <div className='full-hand-community-card'>
-            <Deck deck_id={deck_id} turnOverCard={this.turnOverCard} card={card} />
+            <Deck turnOverCard={this.turnOverCard} card={card} />
           </div>
         </div>
         <Results cards={cards} card={card} />
