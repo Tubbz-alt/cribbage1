@@ -33,6 +33,9 @@ class Results extends Component {
     for (let i = 0; i < runsResult.length; i++) {
       score = score + runsResult[i].length
     }
+    if (flushResult.length > 0) {
+      score = score + flushResult.length
+    }
     if (nibsResult.length > 0) {
       score = score + 1
     }
@@ -130,18 +133,19 @@ class Results extends Component {
         </div>
       )}</div>
 
-      displayNibs = <div>{nibsResult.map(result =>
-        <div style={{ display: (showResults ? 'block' : 'none') }}>
+      if (nibsResult.length > 0) {
+        displayNibs = <div style={{ display: (showResults ? 'block' : 'none') }}>
           <ul>
             <div className='result-row'>
-              <div className='result-image'>
-                <img className='result-card' src={result.image} key={result.code} alt={result.code} />
+              <div className='result-image'>{nibsResult.map(card =>
+                <img className='result-card' src={card.image} key={card.code} alt={card.code} />
+              )}
               </div>
               <div className='result-text'>Nibs - Points: 1</div>
             </div>
           </ul>
         </div>
-      )}</div>
+      }
       if (flushResult.length > 0) {
         displayFlush = <div style={{ display: (showResults ? 'block' : 'none') }}>
           <ul>
@@ -150,7 +154,7 @@ class Results extends Component {
                 <img className='result-card' src={card.image} key={card.code} alt={card.code} />
               )}
               </div>
-              <div className='result-text'>Flush - Points: 5</div>
+              <div className='result-text'>Flush - Points: {flushResult.length}</div>
             </div>
           </ul>
         </div>
@@ -158,7 +162,6 @@ class Results extends Component {
         displayFlush = <div />
       }
     }
-
 
     if (fullHand.length === 5) {
       return <div>

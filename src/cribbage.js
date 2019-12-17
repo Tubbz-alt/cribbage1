@@ -316,13 +316,14 @@ export function getFlushes(cardHand) {
   return []
 }
 
-// checks if the hand as a Jack that matches the suit of the community card
+// checks if the hand has a Jack that matches the suit of the community card
 export function
   getNibs(cards, card) {
   let communitySuit = card.suit
   let result = []
   for (let i = 0; i < cards.length; i++) {
     if (cards[i].value === 'JACK' && cards[i].suit === communitySuit) {
+      result.push(cards[i])
       result.push(card)
     }
   }
@@ -360,14 +361,12 @@ export function getRuns(cardHand) {
     }
   }
   // now look for runs of 3 using the the 9 possible combos of 3 runs if there were no runs of 4
-  if (!runOf4Found) {
+  if (!runOf4Found && !runOf5Found) {
     for (let i = 0; i < patternsOfThree.length; i++) {
       if (findRun(sortedCards, patternsOfThree[i])) {
         runsResult.push([sortedCards[patternsOfThree[i][0]], sortedCards[patternsOfThree[i][1]], sortedCards[patternsOfThree[i][2]]])
-        runsResult.description = 'fred'
-        runsResult.score = 3
       }
     }
   }
-  return runsResult
+  return runOf5Found ? [sortedCards] : runsResult
 }

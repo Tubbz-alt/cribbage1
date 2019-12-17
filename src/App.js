@@ -56,10 +56,10 @@ class App extends Component {
   // // fake results of a pair
   getHandTemp() {
     const results = [
-      { value: '4', code: '4d', image: 'https://deckofcardsapi.com/static/img/4D.png', suit: 'DIAMONDS' },
+      { value: '4', code: '4c', image: 'https://deckofcardsapi.com/static/img/4C.png', suit: 'CLUBS' },
       { value: '2', code: '2c', image: 'https://deckofcardsapi.com/static/img/2C.png', suit: 'CLUBS' },
-      { value: '2', code: '2h', image: 'https://deckofcardsapi.com/static/img/2H.png', suit: 'HEARTS' },
-      { value: '3', code: '3h', image: 'https://deckofcardsapi.com/static/img/3H.png', suit: 'HEARTS' },
+      { value: '5', code: '5c', image: 'https://deckofcardsapi.com/static/img/5C.png', suit: 'CLUBS' },
+      { value: '3', code: '3c', image: 'https://deckofcardsapi.com/static/img/3C.png', suit: 'CLUBS' },
     ]
     this.setState({
       hand: results
