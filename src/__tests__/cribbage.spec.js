@@ -1,105 +1,25 @@
 import { getPairs, getFifteenSums, getFlushes, getNibs, getRuns } from '../cribbage.js'
 // sample cards used in tests
-const cardKC = {
-  code: 'KC',
-  suit: 'CLUBS',
-  value: 'KING'
-}
-const cardKH = {
-  code: 'KH',
-  suit: 'HEARTS',
-  value: 'KING'
-}
-const cardQC = {
-  code: 'QC',
-  suit: 'CLUBS',
-  value: 'QUEEN'
-}
-const cardQS = {
-  code: 'QS',
-  suit: 'SPADES',
-  value: 'QUEEN'
-}
-const cardQH = {
-  code: 'QH',
-  suit: 'HEARTS',
-  value: 'QUEEN'
-}
-const cardQD = {
-  code: 'QD',
-  suit: 'DIAMONDS',
-  value: 'QUEEN'
-}
-const cardJH = {
-  code: 'JH',
-  suit: 'HEARTS',
-  value: 'JACK'
-}
-const card9D = {
-  code: '9D',
-  suit: 'DIAMONDS',
-  value: '9'
-}
-const card8D = {
-  code: '8D',
-  suit: 'DIAMONDS',
-  value: '8'
-}
-const card8H = {
-  code: '8H',
-  suit: 'HEARTS',
-  value: '8'
-}
-const card7D = {
-  code: '7D',
-  suit: 'DIAMONDS',
-  value: '7'
-}
-const card7H = {
-  code: '7H',
-  suit: 'HEARTS',
-  value: '7'
-}
-const card6S = {
-  code: '6S',
-  suit: 'SPADES',
-  value: '6'
-}
-const card6H = {
-  code: '6H',
-  suit: 'HEARTS',
-  value: '6'
-}
-const card5D = {
-  code: '5D',
-  suit: 'DIAMONDS',
-  value: '5'
-}
-const card4H = {
-  code: '4H',
-  suit: 'HEARTS',
-  value: '4'
-}
-const card3H = {
-  code: '3H',
-  suit: 'HEARTS',
-  value: '3'
-}
-const card2H = {
-  code: '2H',
-  suit: 'HEARTS',
-  value: '2'
-}
-const cardAC = {
-  code: 'AC',
-  suit: 'CLUBS',
-  value: 'ACE'
-}
-const cardAS = {
-  code: 'AS',
-  suit: 'SPADES',
-  value: 'ACE'
-}
+const cardKC = { code: 'KC', suit: 'CLUBS', value: 'KING' }
+const cardKH = { code: 'KH', suit: 'HEARTS', value: 'KING' }
+const cardQC = { code: 'QC', suit: 'CLUBS', value: 'QUEEN' }
+const cardQS = { code: 'QS', suit: 'SPADES', value: 'QUEEN' }
+const cardQH = { code: 'QH', suit: 'HEARTS', value: 'QUEEN' }
+const cardQD = { code: 'QD', suit: 'DIAMONDS', value: 'QUEEN' }
+const cardJH = { code: 'JH', suit: 'HEARTS', value: 'JACK' }
+const card9D = { code: '9D', suit: 'DIAMONDS', value: '9' }
+const card8D = { code: '8D', suit: 'DIAMONDS', value: '8' }
+const card8H = { code: '8H', suit: 'HEARTS', value: '8' }
+const card7D = { code: '7D', suit: 'DIAMONDS', value: '7' }
+const card7H = { code: '7H', suit: 'HEARTS', value: '7' }
+const card6S = { code: '6S', suit: 'SPADES', value: '6' }
+const card6H = { code: '6H', suit: 'HEARTS', value: '6' }
+const card5D = { code: '5D', suit: 'DIAMONDS', value: '5' }
+const card4H = { code: '4H', suit: 'HEARTS', value: '4' }
+const card3H = { code: '3H', suit: 'HEARTS', value: '3' }
+const card2H = { code: '2H', suit: 'HEARTS', value: '2' }
+const cardAC = { code: 'AC', suit: 'CLUBS', value: 'ACE' }
+const cardAS = { code: 'AS', suit: 'SPADES', value: 'ACE' }
 
 describe("Function getPairs()", () => {
   test("it should return a single pair", () => {

@@ -23,8 +23,8 @@ class App extends Component {
         response.json()
       )
       .then(result => {
-        console.log('STATE1111', this.state)
-        console.log('BBBBBBB deck_id ', result.deck_id)
+        // console.log('STATE1111', this.state)
+        // console.log('BBBBBBB deck_id ', result.deck_id)
         // handle error here TODO
         // result.success hould be true
         this.setState({

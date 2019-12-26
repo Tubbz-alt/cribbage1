@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { getPairs, getFifteenSums, getFlushes, getNibs, getRuns } from './cribbage.js'
 
 class Results extends Component {
@@ -19,6 +20,40 @@ class Results extends Component {
       [2, 3, 4],
       [0, 2, 3]
     ]
+  }
+
+  // highlight the cards in the hand
+  addHighlight(event, cards) {
+    let test
+    if (cards.result) {
+      test = cards.result
+    } else {
+      test = cards
+    }
+    console.log('8888888888888 ', test)
+    for (var i = 0; i < test.length; i++) {
+      console.log('Looking for cards with id of: ', test[i].code)
+      const elem = document.getElementById(test[i].code)
+      if (elem) {
+        elem.style.border = "thick solid blue";
+      }
+    }
+  }
+  removeHighlight(event, cards) {
+    let test
+    if (cards.result) {
+      test = cards.result
+    } else {
+      test = cards
+    }
+    console.log('9999999999999 ', test)
+    for (var i = 0; i < test.length; i++) {
+      console.log('Looking for cards with id of: ', test[i].code)
+      const elem = document.getElementById(test[i].code)
+      if (elem) {
+        elem.style.border = null;
+      }
+    }
   }
 
   // tallyTheScores(pairResult, fullSumsResult, runsResult, nibsResult) {
@@ -54,10 +89,6 @@ class Results extends Component {
     let totalScore = 0
 
     if (fullHand.length === 5) {
-      pairResults = getPairs(fullHand)
-      console.log('****** P A I R   R E S U L T S')
-      console.log(pairResults)
-
       sumsResult = getFifteenSums(fullHand)
       console.log('******  S U M   R E S U L T S')
       console.log(sumsResult)
@@ -66,6 +97,10 @@ class Results extends Component {
       console.log('******  R U N S  R E S U L T S')
       console.log('======> runsResult ', runsResult)
       console.log(runsResult)
+
+      pairResults = getPairs(fullHand)
+      console.log('****** P A I R   R E S U L T S')
+      console.log(pairResults)
 
       flushResult = getFlushes(fullHand)
       console.log('****** F L U S H   R E S U L T S')
@@ -94,7 +129,7 @@ class Results extends Component {
       displayPairs = <div>{pairResults.map(result =>
         <div style={{ display: (showResults ? 'block' : 'none') }}>
           <ul>
-            <div className='result-row'>
+            <div className='result-row' onMouseOver={(e) => this.addHighlight(e, result)} onMouseOut={(e) => this.removeHighlight(e, result)}>
               <div className='result-image'>{result.result.map(card =>
                 <img className='result-card' src={card.image} key={card.code} alt={card.code} />
               )}
@@ -108,7 +143,7 @@ class Results extends Component {
       displaySums = <div>{sumsResult.map(result =>
         <div style={{ display: (showResults ? 'block' : 'none') }}>
           <ul>
-            <div className='result-row'>
+            <div className='result-row' onMouseOver={(e) => this.addHighlight(e, result)} onMouseOut={(e) => this.removeHighlight(e, result)}>
               <div className='result-image'>{result.map(card =>
                 <img className='result-card' src={card.image} key={card.code} alt={card.code} />
               )}
@@ -122,7 +157,7 @@ class Results extends Component {
       displayRuns = <div>{runsResult.map(result =>
         <div style={{ display: (showResults ? 'block' : 'none') }}>
           <ul>
-            <div className='result-row'>
+            <div className='result-row' onMouseOver={(e) => this.addHighlight(e, result)} onMouseOut={(e) => this.removeHighlight(e, result)}>
               <div className='result-image'>{result.map(card =>
                 <img className='result-card' src={card.image} key={card.code} alt={card.code} />
               )}
@@ -136,7 +171,7 @@ class Results extends Component {
       if (nibsResult.length > 0) {
         displayNibs = <div style={{ display: (showResults ? 'block' : 'none') }}>
           <ul>
-            <div className='result-row'>
+            <div className='result-row' onMouseOver={(e) => this.addHighlight(e, nibsResult)} onMouseOut={(e) => this.removeHighlight(e, nibsResult)}>
               <div className='result-image'>{nibsResult.map(card =>
                 <img className='result-card' src={card.image} key={card.code} alt={card.code} />
               )}
@@ -149,7 +184,7 @@ class Results extends Component {
       if (flushResult.length > 0) {
         displayFlush = <div style={{ display: (showResults ? 'block' : 'none') }}>
           <ul>
-            <div className='result-row'>
+            <div className='result-row' onMouseOver={(e) => this.addHighlight(e, flushResult)} onMouseOut={(e) => this.removeHighlight(e, flushResult)}>
               <div className='result-image'>{flushResult.map(card =>
                 <img className='result-card' src={card.image} key={card.code} alt={card.code} />
               )}
@@ -169,9 +204,9 @@ class Results extends Component {
         <div style={{ display: (showResults ? 'block' : 'none') }}>
           <h3>Result: Score = {totalScore}</h3>
         </div>
-        {displayPairs}
         {displaySums}
         {displayRuns}
+        {displayPairs}
         {displayFlush}
         {displayNibs}
       </div>
@@ -186,6 +221,11 @@ class Results extends Component {
     }
 
   }
+}
+
+Results.proptypes = {
+  cards: PropTypes.array.isReqired,
+  card: PropTypes.object.isReqired
 }
 
 export default Results

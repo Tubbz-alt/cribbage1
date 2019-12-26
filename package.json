@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@types/prop-types": "^15.7.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "^2.1.1"
+    "react-scripts": "^2.1.1",
+    "rewire": "^4.0.1"
   },
   "homepage": "https://thecoucher.github.io/cribbage1",
   "scripts": {

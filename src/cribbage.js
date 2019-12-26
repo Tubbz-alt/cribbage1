@@ -149,10 +149,9 @@ function countOcurrences(arr, c) {
 
 // gets pairs, triplets and quartets of cards in a hand
 export function getPairs(fullHand) {
-  //debugger
   // reduce the array to an array of chars
   let charArray = convertToChars(fullHand)
-  // creating aset removes duplicates.
+  // creating a set removes duplicates.
   const uniqueSet = new Set(charArray)
   // turn set back to array so that we have an
   // array of unique values in the hand
