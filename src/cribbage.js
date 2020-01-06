@@ -317,13 +317,13 @@ export function getFlushes(cardHand) {
 
 // checks if the hand has a Jack that matches the suit of the community card
 export function
-  getNibs(cards, card) {
-  let communitySuit = card.suit
+  getNibs(cards) {
+  let communitySuit = cards[4].suit
   let result = []
-  for (let i = 0; i < cards.length; i++) {
+  for (let i = 0; i < cards.length - 1; i++) {
     if (cards[i].value === 'JACK' && cards[i].suit === communitySuit) {
       result.push(cards[i])
-      result.push(card)
+      result.push(cards[4])
     }
   }
   return result

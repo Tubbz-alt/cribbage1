@@ -187,17 +187,41 @@ body {
   background: #AAAAAA;
   font-size: 1rem; }
 
-div.full-hand-cardsLeft {
-  width: 55%;
+header.cribbage-header {
+   /*border: 1px red solid;*/
 }
 
-div.full-hand-community-card {
-  justify-content: left;
-  width: 45%;
+section.cribbage-section {
+  border: 1px green dashed;
+  display: flex;
+  align-items: right;
+
+}
+
+button.cribbage-button {
+  width: 150px;
+  height: 40px;
+  padding: 10px;
+  margin: 12px;
+  color: white;
+  background: cornflowerblue;
+  border: red
+}
+
+div.cribbage-parent {
+  width: 100%
+}
+
+section.cribbage-results {
+  display: flex;
+}
+
+div.full-hand-cardsLeft {
+  width: 90%;
 }
 
 div.results {
-  width: 75%;
+  width: 90%;
   border-style: solid; border-width: 1px; color: red
 }
 
@@ -207,11 +231,11 @@ div.result-row {
 }
 
 div.result-image {
-  width: 50%;
+  width: 90%;
 }
 
 div.result-text {
-  width: 50%;
+  width: 90%;
 }
 
 div.show-results {
@@ -219,6 +243,52 @@ div.show-results {
   justify-content: left;
 }
 
+div.CustomHandForm {
+  width: 90%;
+  margin: 50px 10%;
+}
+div#card-options {
+  display: flex;
+  width: 100%;
+}
+
+div.CustomHandForm > label {
+   display:block;
+}
+
+div.card-option {
+  padding: 0px;
+  width: 128px;
+  margin: 4px;
+  float: left;
+}
+
+div.c-card-option {
+  padding: 0px;
+  width: 128px;
+  margin: 4px;
+  float: right;
+}
+
+select.custom-select {
+  display: block;
+  padding: 2px;
+  outline: none;
+  background: cornflowerblue;
+  margin-bottom: .25rem;
+  font-size: .8rem;
+  width: 128px;
+  max-width: 100%;
+  line-height: 1;
+}
+
+select.custom:hover {
+border: blue;
+}
+
+select.custom:focus {
+  border: red;
+}
 div.bordered-red {
   border-style: solid; border-width: 1px; color: red
 }
@@ -228,11 +298,37 @@ div.bordered-blue {
 img.result-card {
   height: 90px;
   width: 64px;
-  padding-right: 2px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  float: left;
 }
-img.hand {
+div.cribbage-points {
+  display: inline-block;
+  height: 100%;
+  width: 200px;
+  margin-left: auto;
+  text-align: left;
+  vertical-align: middle;
+ }
+div.cribbage-points span {
+  /*display: inline-block;*/
+  vertical-align: middle;
+  line-height: normal;
+}
+img.card {
   height: 180px ;
   width: 128px;
+  margin: 4px;
+  padding: 0px;
+  float: left;
+}
+img.c-card {
+  height: 180px ;
+  width: 128px;
+  padding: 0px;
+  margin: 4px;
+  /*margin-left: auto;*/
+  float: right;
 }
 
 p,
@@ -376,7 +472,7 @@ dd {
   padding: 0 1rem; }
 
 .container, .small-container, .medium-container {
-  max-width: 1200px;
+  max-width: 800px;
   padding: 0 1rem;
   margin-left: auto;
   margin-right: auto; }
@@ -595,7 +691,10 @@ a.full-button {
 
 /* Forms
   =============== */
-[type=color], [type=date], [type=datetime], [type=datetime-local], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=url], [type=week], [type=time], select, textarea {
+/*
+  [type=color], [type=date], [type=datetime], [type=datetime-local], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=url], [type=week], [type=time], select, textarea {
+*/
+  [type=color], [type=date], [type=datetime], [type=datetime-local], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=url], [type=week], [type=time], textarea {
   display: block;
   border: 1px solid #cdcdcd;
   border-radius: 4px;
@@ -608,7 +707,10 @@ a.full-button {
   max-width: 100%;
   line-height: 1; }
 
-[type=color]:hover, [type=date]:hover, [type=datetime]:hover, [type=datetime-local]:hover, [type=email]:hover, [type=month]:hover, [type=number]:hover, [type=password]:hover, [type=search]:hover, [type=tel]:hover, [type=text]:hover, [type=url]:hover, [type=week]:hover, [type=time]:hover, select:hover, textarea:hover {
+  /*
+  [type=color]:hover, [type=date]:hover, [type=datetime]:hover, [type=datetime-local]:hover, [type=email]:hover, [type=month]:hover, [type=number]:hover, [type=password]:hover, [type=search]:hover, [type=tel]:hover, [type=text]:hover, [type=url]:hover, [type=week]:hover, [type=time]:hover, select:hover, textarea:hover {
+  */
+  [type=color]:hover, [type=date]:hover, [type=datetime]:hover, [type=datetime-local]:hover, [type=email]:hover, [type=month]:hover, [type=number]:hover, [type=password]:hover, [type=search]:hover, [type=tel]:hover, [type=text]:hover, [type=url]:hover, [type=week]:hover, [type=time]:hover, select:hover, textarea:hover {
   border: 1px solid #b4b4b4; }
 
 [type=color]:focus, [type=color]:active, [type=date]:focus, [type=date]:active, [type=datetime]:focus, [type=datetime]:active, [type=datetime-local]:focus, [type=datetime-local]:active, [type=email]:focus, [type=email]:active, [type=month]:focus, [type=month]:active, [type=number]:focus, [type=number]:active, [type=password]:focus, [type=password]:active, [type=search]:focus, [type=search]:active, [type=tel]:focus, [type=tel]:active, [type=text]:focus, [type=text]:active, [type=url]:focus, [type=url]:active, [type=week]:focus, [type=week]:active, [type=time]:focus, [type=time]:active, select:focus, select:active, textarea:focus, textarea:active {
@@ -630,11 +732,12 @@ legend {
   font-weight: 600; }
 
 select {
-  color: #404040;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAYAAAA/33wPAAAAvklEQVQoFY2QMQqEMBBFv7ERa/EMXkGw11K8QbDXzuN4BHv7QO6ifUgj7v4UAdlVM8Uwf+b9YZJISnlqrfEUZVlinucnBGKaJgghbiHOyLyFKIoCbdvecpyReYvo/Ma2bajrGtbaC58kCdZ1RZ7nl/4/4d5EsO/7nzl7IUtodBexMMagaRrs+06JLMvcNWmaOv2W/C/TMAyD58dxROgSmvxFFMdxoOs6lliWBXEcuzokXRbRoJRyvqqqQvye+QDMDz1D6yuj9wAAAABJRU5ErkJggg==) right center no-repeat;
-  line-height: 1; }
+  color:  white;
+  /*-webkit-appearance: none;*/
+  /* -moz-appearance: none; */
+  /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAYAAAA/33wPAAAAvklEQVQoFY2QMQqEMBBFv7ERa/EMXkGw11K8QbDXzuN4BHv7QO6ifUgj7v4UAdlVM8Uwf+b9YZJISnlqrfEUZVlinucnBGKaJgghbiHOyLyFKIoCbdvecpyReYvo/Ma2bajrGtbaC58kCdZ1RZ7nl/4/4d5EsO/7nzl7IUtodBexMMagaRrs+06JLMvcNWmaOv2W/C/TMAyD58dxROgSmvxFFMdxoOs6lliWBXEcuzokXRbRoJRyvqqqQvye+QDMDz1D6yuj9wAAAABJRU5ErkJggg==) right center no-repeat;
+  line-height: 1;*/
+ }
 
 select::-ms-expand {
   display: none; }

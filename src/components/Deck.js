@@ -21,7 +21,7 @@ const Deck = (props) => {
 
   return (
     <div>
-      <button onClick={() => props.turnOverCard()}>Reveal New Card</button>
+      <button className='cribbage-button' onClick={() => props.turnOverCard()}>Reveal New Card</button>
       <div>Community Card</div>
       {cardImage}
     </div>
