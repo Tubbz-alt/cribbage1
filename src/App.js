@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import swal from 'sweetalert'
 // import { Link } from 'react-router-dom'
 //import { withRouter } from 'react-router-dom'
 // import Deck from './components/Deck'
@@ -36,10 +37,6 @@ class App extends Component {
         response.json()
       )
       .then(result => {
-        // console.log('STATE1111', this.state)
-        // console.log('BBBBBBB deck_id ', result.deck_id)
-        // handle error here TODO
-        // result.success hould be true
         this.setState({
           deck_id: result.deck_id,
           cardsLeft: result.remaining
@@ -110,7 +107,24 @@ class App extends Component {
    *
    */
   getHand() {
-    const url = 'https://deckofcardsapi.com/api/deck/' + this.state.deck_id + '/draw/?count=5'
+    // make sure there are enough cards left in the deck
+    console.log('FFFFFFFFFFFFFFFFFFFFFF ', this.state.cardsLeft)
+    let url
+    if (this.state.cardsLeft < 5) {
+      swal('New deck', 'There are not enough cards left in the deck. Getting new deck', 'info');
+      url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
+      fetch(url)
+        .then(response =>
+          response.json()
+        )
+        .then(result => {
+          this.setState({
+            deck_id: result.deck_id,
+            cardsLeft: result.remaining
+          })
+        })
+    }
+    url = 'https://deckofcardsapi.com/api/deck/' + this.state.deck_id + '/draw/?count=5'
     fetch(url)
       .then(response =>
         response.json()
@@ -131,6 +145,42 @@ class App extends Component {
 
   showCustomHandForm() {
     console.log('Showing custom hand form. ', this.props)
+  }
+
+  alreadyExists1(position, value) {
+    console.log('alreadyExists - position: ', position)
+    console.log('alreadyExists - value: ', value)
+    console.log('code map stuff: ', this.codeMap[value])
+
+    //let's get the suit
+    const suit = this.state.hand[position].suit
+    const code = `${this.codeMap[value]}${suit.charAt(0)}`
+    // console.log('The code is... ', hand.code)
+
+    for (let i = 0; i < this.state.hand.length; i++) {
+      console.log('Comparing... ', this.state.hand[i].code, ' to ', code)
+      if (this.state.hand[i].code === code) {
+        return true
+      }
+    }
+    return false
+  }
+
+  alreadyExists2(position, suit) {
+    console.log('alreadyExists - position: ', position)
+    console.log('alreadyExists - value: ', suit)
+
+    // let's get the code
+    const code = `${this.state.hand[position].code.charAt(0)}${suit.charAt(0)}`
+    console.log('new code : ', code)
+
+    for (let i = 0; i < this.state.hand.length; i++) {
+      console.log('Comparing... ', this.state.hand[i].code, ' to ', code)
+      if (this.state.hand[i].code === code) {
+        return true
+      }
+    }
+    return false
   }
 
   changeCard(card, value) {
@@ -175,18 +225,37 @@ class App extends Component {
     console.log('Custom hand has changed. The name is: ', name)
     console.log('Custom hand has changed. The value is: ', value)
     console.log('Custom hand has changed. The position is: ', position)
+
+    // determine if this already exists in the hand
+    // console.log('Already exists result: ', this.alreadyExists(position, value))
+
     let hand = this.state.hand
     let card = { ...hand[position] }
     let newCard
     if (name.slice(0, 4) === 'card') {
       console.log('Dealing with the card change')
-      newCard = this.changeCard(card, value)
+      if (!this.alreadyExists1(position, value)) {
+        console.log('Making the change...')
+        newCard = this.changeCard(card, value)
+        hand[position] = newCard
+        this.setState({ hand })
+      } else {
+        swal("Oops!", "You cannot have two identical cards in a hand.", "warning");
+        console.log('NOT making the change...')
+      }
+      //newCard = this.changeCard(card, value)
     } else if (name.slice(0, 4) === 'suit') {
       console.log('Dealing with a suit change')
-      newCard = this.changeSuit(card, value)
+      if (!this.alreadyExists2(position, value)) {
+        newCard = this.changeSuit(card, value)
+        hand[position] = newCard
+        this.setState({ hand })
+      } else {
+        swal("Oops!", "You cannot have two identical cards in a hand.", "warning");
+        console.log('NOT making the change...')
+      }
+      //newCard = this.changeSuit(card, value)
     }
-    hand[position] = newCard
-    this.setState({ hand })
   }
 
   render() {
@@ -213,7 +282,7 @@ class App extends Component {
     }
     return (
       <div className="container">
-        <h1>Cribbage Hand Tester</h1>
+        <h1 className='cribbage-text'>Cribbage Hand Tester</h1>
         <p>Guess how many points this hand is worth.</p>
 
 

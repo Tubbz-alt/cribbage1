@@ -183,8 +183,8 @@ html {
   font-size: 1rem; }
 
 body {
-  color: #404040;
-  background: #AAAAAA;
+  color: white;
+  background: #6E6658;
   font-size: 1rem; }
 
 header.cribbage-header {
@@ -204,8 +204,18 @@ button.cribbage-button {
   padding: 10px;
   margin: 12px;
   color: white;
-  background: cornflowerblue;
-  border: red
+  background: #4F4A41;
+  border: #6E6658 1px solid
+}
+
+h1.cribbage-text {
+  color: white
+}
+h2.cribbage-text {
+  color: white
+}
+h3.cribbage-text {
+  color: white
 }
 
 div.cribbage-parent {
@@ -218,11 +228,6 @@ section.cribbage-results {
 
 div.full-hand-cardsLeft {
   width: 90%;
-}
-
-div.results {
-  width: 90%;
-  border-style: solid; border-width: 1px; color: red
 }
 
 div.result-row {
@@ -274,7 +279,7 @@ select.custom-select {
   display: block;
   padding: 2px;
   outline: none;
-  background: cornflowerblue;
+  background: #4F4A41;
   margin-bottom: .25rem;
   font-size: .8rem;
   width: 128px;
@@ -283,18 +288,9 @@ select.custom-select {
 }
 
 select.custom:hover {
-border: blue;
+border: D9B08C;
 }
 
-select.custom:focus {
-  border: red;
-}
-div.bordered-red {
-  border-style: solid; border-width: 1px; color: red
-}
-div.bordered-blue {
-  border-style: solid; border-width: 2px; color: blue
-}
 img.result-card {
   height: 90px;
   width: 64px;
@@ -635,15 +631,15 @@ dd {
   line-height: 1; }
 
 .button:hover, a.button:hover, button:hover, [type=submit]:hover, [type=reset]:hover, [type=button]:hover {
-  border: 1px solid #0250bc;
-  background: #0250bc;
-  color: #ffffff;
+  border: 1px solid #4f4a41;
+  background: #4f4a41;
+  color: FFFFFF;
   text-decoration: none; }
 
 .button:focus, .button:active, a.button:focus, a.button:active, button:focus, button:active, [type=submit]:focus, [type=submit]:active, [type=reset]:focus, [type=reset]:active, [type=button]:focus, [type=button]:active {
-  border: 1px solid #0250bc;
-  background: #0250bc;
-  color: #ffffff;
+  border: 1px solid #4F4A41;
+  background: #4F4A41;
+  color: white;
   text-decoration: none; }
 
 .button::-moz-focus-inner, a.button::-moz-focus-inner, button::-moz-focus-inner, [type=submit]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=button]::-moz-focus-inner {
@@ -713,8 +709,8 @@ a.full-button {
   [type=color]:hover, [type=date]:hover, [type=datetime]:hover, [type=datetime-local]:hover, [type=email]:hover, [type=month]:hover, [type=number]:hover, [type=password]:hover, [type=search]:hover, [type=tel]:hover, [type=text]:hover, [type=url]:hover, [type=week]:hover, [type=time]:hover, select:hover, textarea:hover {
   border: 1px solid #b4b4b4; }
 
-[type=color]:focus, [type=color]:active, [type=date]:focus, [type=date]:active, [type=datetime]:focus, [type=datetime]:active, [type=datetime-local]:focus, [type=datetime-local]:active, [type=email]:focus, [type=email]:active, [type=month]:focus, [type=month]:active, [type=number]:focus, [type=number]:active, [type=password]:focus, [type=password]:active, [type=search]:focus, [type=search]:active, [type=tel]:focus, [type=tel]:active, [type=text]:focus, [type=text]:active, [type=url]:focus, [type=url]:active, [type=week]:focus, [type=week]:active, [type=time]:focus, [type=time]:active, select:focus, select:active, textarea:focus, textarea:active {
-  border: 1px solid #0366EE;
+[type=color]:focus, [type=color]:active, [type=date]:focus, [type=date]:active, [type=datetime]:focus, [type=datetime]:active, [type=datetime-local]:focus, [type=datetime-local]:active, [type=email]:focus, [type=email]:active, [type=month]:focus, [type=month]:active, [type=number]:focus, [type=number]:active, [type=password]:focus, [type=password]:active, [type=search]:focus, [type=search]:active, [type=tel]:focus, [type=tel]:active, [type=text]:focus, [type=text]:active, [type=url]:focus, [type=url]:active, [type=week]:focus, [type=time]:focus, [type=time]:active, select:focus, select:active, textarea:focus, textarea:active {
+  border: 1px solid #;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 6px #8cbcfe; }
 
 textarea {

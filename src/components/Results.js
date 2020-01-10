@@ -86,26 +86,26 @@ class Results extends Component {
 
     if (fullHand.length === 5) {
       sumsResult = getFifteenSums(fullHand)
-      console.log('******  S U M   R E S U L T S')
-      console.log(sumsResult)
+      // console.log('******  S U M   R E S U L T S')
+      // console.log(sumsResult)
 
       runsResult = getRuns(fullHand)
-      console.log('******  R U N S  R E S U L T S')
-      console.log('======> runsResult ', runsResult)
-      console.log(runsResult)
+      // console.log('******  R U N S  R E S U L T S')
+      // console.log('======> runsResult ', runsResult)
+      // console.log(runsResult)
 
       pairResults = getPairs(fullHand)
-      console.log('****** P A I R   R E S U L T S')
-      console.log(pairResults)
+      // console.log('****** P A I R   R E S U L T S')
+      // console.log(pairResults)
 
       flushResult = getFlushes(fullHand)
-      console.log('****** F L U S H   R E S U L T S')
-      console.log(flushResult)
+      // console.log('****** F L U S H   R E S U L T S')
+      // console.log(flushResult)
 
       nibsResult = getNibs(cards)
-      console.log('******  N I B S   R E S U L T S')
-      console.log('======> nibsResult ', nibsResult)
-      console.log(nibsResult)
+      // console.log('******  N I B S   R E S U L T S')
+      // console.log('======> nibsResult ', nibsResult)
+      // console.log(nibsResult)
 
       // add all the results of the sums
       totalScore = this.tallyTheScores(pairResults, sumsResult, runsResult, flushResult, nibsResult)
@@ -186,7 +186,7 @@ class Results extends Component {
       return <div>
         <div>{showResultsCheckbox}</div>
         <div style={{ display: (showResults ? 'block' : 'none') }}>
-          <h3>Score = {totalScore}</h3>
+          <h3 className='cribbage-text'>Score = {totalScore}</h3>
         </div>
         {displaySums}
         {displayRuns}
