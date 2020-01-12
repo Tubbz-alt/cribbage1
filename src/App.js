@@ -110,9 +110,12 @@ class App extends Component {
     // make sure there are enough cards left in the deck
     console.log('FFFFFFFFFFFFFFFFFFFFFF ', this.state.cardsLeft)
     let url
+    console.log('ffff11111111111111111111')
     if (this.state.cardsLeft < 5) {
-      swal('New deck', 'There are not enough cards left in the deck. Getting new deck', 'info');
+      console.log('ffff2222222222222')
+      swal('New deck', 'There are not enough cards left in the deck. Now using new deck', 'info');
       url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
+      console.log("Here i go to fetch....")
       fetch(url)
         .then(response =>
           response.json()
@@ -122,19 +125,33 @@ class App extends Component {
             deck_id: result.deck_id,
             cardsLeft: result.remaining
           })
+          url = 'https://deckofcardsapi.com/api/deck/' + result.deck_id + '/draw/?count=5'
         })
+        .then(() => {
+          fetch(url)
+            .then(response =>
+              response.json()
+            )
+            .then(result => {
+              this.setState({
+                hand: result.cards,
+                cardsLeft: result.remaining
+              })
+            })
+        });
+    } else {
+      url = 'https://deckofcardsapi.com/api/deck/' + this.state.deck_id + '/draw/?count=5'
+      fetch(url)
+        .then(response =>
+          response.json()
+        )
+        .then(result => {
+          this.setState({
+            hand: result.cards,
+            cardsLeft: result.remaining
+          })
+        });
     }
-    url = 'https://deckofcardsapi.com/api/deck/' + this.state.deck_id + '/draw/?count=5'
-    fetch(url)
-      .then(response =>
-        response.json()
-      )
-      .then(result => {
-        this.setState({
-          hand: result.cards,
-          cardsLeft: result.remaining
-        })
-      });
   }
 
   setShowCustomHand(value) {
@@ -147,6 +164,10 @@ class App extends Component {
     console.log('Showing custom hand form. ', this.props)
   }
 
+  getCode(value, suit) {
+    return `${this.codeMap[value]}${suit.charAt(0)}`
+  }
+
   alreadyExists1(position, value) {
     console.log('alreadyExists - position: ', position)
     console.log('alreadyExists - value: ', value)
@@ -154,8 +175,7 @@ class App extends Component {
 
     //let's get the suit
     const suit = this.state.hand[position].suit
-    const code = `${this.codeMap[value]}${suit.charAt(0)}`
-    // console.log('The code is... ', hand.code)
+    let code = this.getCode(value, suit)
 
     for (let i = 0; i < this.state.hand.length; i++) {
       console.log('Comparing... ', this.state.hand[i].code, ' to ', code)

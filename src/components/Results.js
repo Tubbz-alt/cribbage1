@@ -113,7 +113,7 @@ class Results extends Component {
     }
 
     const showResultsCheckbox = <div className='show-results'>
-      <input type='checkbox' inline='true' checked={showResults} onClick={() => { this.setState({ showResults: !showResults }) }} />
+      <input type='checkbox' inline='true' checked={showResults} onChange={() => { this.setState({ showResults: !showResults }) }} />
       <div>Show results</div>
     </div>
 
