@@ -56,13 +56,13 @@ function sortCards(cards) {
 
     switch (copyOfCards[i].value) {
       case 'ACE':
-        copyOfCards[i].val = 1;
+        copyOfCards[i].val = 1
         break;
       case 'JACK':
-        copyOfCards[i].val = 11;
+        copyOfCards[i].val = 11
         break;
       case 'QUEEN':
-        copyOfCards[i].val = 12;
+        copyOfCards[i].val = 12
         break;
       case 'KING':
         copyOfCards[i].val = 13
@@ -89,15 +89,15 @@ export function sumTwoNumbers(a, b) {
 * @example [[1,2], [3,5], [4,5]]
 */
 function twoSum(arr, target = 15) {
-  var result = [];
+  var result = []
   for (var i = 0; i < arr.length; i++) {
     for (var j = i + 1; j < arr.length; j++) {
       if (arr[i] + arr[j] === target) {
-        result.push([i, j]);
+        result.push([i, j])
       }
     }
   }
-  return result;
+  return result
 }
 
 /**
@@ -233,7 +233,7 @@ function getFifteenTriplets(cardHand, target = 15) {
   let hand = convertToIntegers(cardHand)
   let pairTarget = target - hand[0]
   hand.shift()
-  let start = 0;
+  let start = 0
   // let intermediateResult = []
   let fifteenTriplets = []
   for (let j = start + 1; j < hand.length + 2; j++) {

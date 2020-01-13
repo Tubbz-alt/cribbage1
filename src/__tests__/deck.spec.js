@@ -12,7 +12,6 @@ describe.only("Testing the Deck component", () => {
   }
   beforeAll(() => {
     result = Deck(input)
-    console.log('333333333 ', result)
   })
   it("should pass", () => {
     // expect(1 + 1).toEqual(2)

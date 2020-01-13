@@ -33,7 +33,6 @@ const Hand = (props) => {
       <header className='cribbage-header'>
         <button className='cribbage-button' onClick={() => props.getHand()}>{buttonText}</button>
         <button className='cribbage-button' onClick={() => props.sortHand()}>Sort Cards</button>
-        <button className='cribbage-button' onClick={() => props.setShowCustomHand(true)}>Custom Hand</button>
       </header>
       <div>Cards remaining in deck: {cardsLeft}</div>
       <section>

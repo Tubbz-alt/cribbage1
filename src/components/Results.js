@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { getPairs, getFifteenSums, getFlushes, getNibs, getRuns } from '.././cribbage.js'
 
 class Results extends Component {
   constructor(props) {
-    super(props);
-    this.state = { showResults: true }
-    // this.personName = 'Fred'
+    super(props)
+    this.state = { showResults: false }
+
     // all 10 combinations that a run of three can have
     this.patternsOfThree = [
       [0, 1, 2],
@@ -23,32 +23,24 @@ class Results extends Component {
   }
 
   // highlight the cards in the hand
-  addHighlight(event, cards) {
-    let test
-    if (cards.result) {
-      test = cards.result
-    } else {
-      test = cards
-    }
-    for (var i = 0; i < test.length; i++) {
-      const elem = document.getElementById(test[i].code)
+  addHighlight(cards) {
+
+    const cardsToHighlight = cards.result ? cards.result : cards
+    for (var i = 0; i < cardsToHighlight.length; i++) {
+      const elem = document.getElementById(cardsToHighlight[i].code)
       if (elem) {
-        elem.style.border = "2px solid blue"
+        elem.style.border = '3px solid blue'
         elem.style['border-radius'] = '8px'
       }
     }
   }
-  removeHighlight(event, cards) {
-    let test
-    if (cards.result) {
-      test = cards.result
-    } else {
-      test = cards
-    }
-    for (var i = 0; i < test.length; i++) {
-      const elem = document.getElementById(test[i].code)
+  removeHighlight(cards) {
+
+    const cardsToRemoveHighlight = cards.result ? cards.result : cards
+    for (var i = 0; i < cardsToRemoveHighlight.length; i++) {
+      const elem = document.getElementById(cardsToRemoveHighlight[i].code)
       if (elem) {
-        elem.style.border = null;
+        elem.style.border = null
       }
     }
   }
@@ -120,8 +112,8 @@ class Results extends Component {
     // Only show results if the full hand has been dealt
     if (fullHand.length === 5) {
       displayPairs = <div>{pairResults.map(result =>
-        <div style={{ display: (showResults ? 'block' : 'none') }}>
-          <section className='cribbage-results' onMouseOver={(e) => this.addHighlight(e, result)} onMouseOut={(e) => this.removeHighlight(e, result)}>
+        <div>
+          <section className='cribbage-results' onMouseOver={() => this.addHighlight(result)} onMouseOut={() => this.removeHighlight(result)}>
             <div className='card-result'>{result.result.map(card =>
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
@@ -133,8 +125,8 @@ class Results extends Component {
       )}</div>
 
       displaySums = <div>{sumsResult.map(result =>
-        <div style={{ display: (showResults ? 'block' : 'none') }}>
-          <section className='cribbage-results' onMouseOver={(e) => this.addHighlight(e, result)} onMouseOut={(e) => this.removeHighlight(e, result)}>
+        <div>
+          <section className='cribbage-results' onMouseOver={() => this.addHighlight(result)} onMouseOut={() => this.removeHighlight(result)}>
             <div className='card-result'>{result.map(card =>
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
@@ -145,8 +137,8 @@ class Results extends Component {
       )}</div>
 
       displayRuns = <div>{runsResult.map(result =>
-        <div style={{ display: (showResults ? 'block' : 'none') }}>
-          <section className='cribbage-results' onMouseOver={(e) => this.addHighlight(e, result)} onMouseOut={(e) => this.removeHighlight(e, result)}>
+        <div>
+          <section className='cribbage-results' onMouseOver={() => this.addHighlight(result)} onMouseOut={() => this.removeHighlight(result)}>
             <div className='card-result'>{result.map(card =>
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
@@ -157,8 +149,8 @@ class Results extends Component {
       )}</div>
 
       if (nibsResult.length > 0) {
-        displayNibs = <div style={{ display: (showResults ? 'block' : 'none') }}>
-          <section className='cribbage-results' onMouseOver={(e) => this.addHighlight(e, nibsResult)} onMouseOut={(e) => this.removeHighlight(e, nibsResult)}>
+        displayNibs = <div>
+          <section className='cribbage-results' onMouseOver={() => this.addHighlight(nibsResult)} onMouseOut={() => this.removeHighlight(nibsResult)}>
             <div className='card-result'>{nibsResult.map(card =>
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
@@ -168,8 +160,8 @@ class Results extends Component {
         </div>
       }
       if (flushResult.length > 0) {
-        displayFlush = <div style={{ display: (showResults ? 'block' : 'none') }}>
-          <section className='cribbage-results' onMouseOver={(e) => this.addHighlight(e, flushResult)} onMouseOut={(e) => this.removeHighlight(e, flushResult)}>
+        displayFlush = <div>
+          <section className='cribbage-results' onMouseOver={() => this.addHighlight(flushResult)} onMouseOut={() => this.removeHighlight(flushResult)}>
             <div className='card-result'>{flushResult.map(card =>
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
@@ -187,12 +179,12 @@ class Results extends Component {
         <div>{showResultsCheckbox}</div>
         <div style={{ display: (showResults ? 'block' : 'none') }}>
           <h3 className='cribbage-text'>Score = {totalScore}</h3>
+          {displaySums}
+          {displayRuns}
+          {displayPairs}
+          {displayFlush}
+          {displayNibs}
         </div>
-        {displaySums}
-        {displayRuns}
-        {displayPairs}
-        {displayFlush}
-        {displayNibs}
       </div>
     } else {
       return (

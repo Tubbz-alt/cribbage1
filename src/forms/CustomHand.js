@@ -16,8 +16,8 @@ const CustomHand = (props) => {
 
   const showCardOptions = (name, value) => {
     return (
-      <div className='the-cards' onChange={handleChange}>
-        <select className='custom-select' value={value} name={name}>
+      <div className='the-cards'>
+        <select className='custom-select' value={value} name={name} onChange={handleChange}>
           <option value='ACE'>Ace</option>
           <option value='2'>Two</option>
           <option value='3'>Three</option>
@@ -37,8 +37,8 @@ const CustomHand = (props) => {
   }
   const showSuitOptions = (name, suit = 'SPADES') => {
     return (
-      <div className='the-suits' onChange={handleChange} >
-        <select className='custom-select' value={suit} name={name}>
+      <div className='the-suits'>
+        <select className='custom-select' value={suit} name={name} onChange={handleChange}>
           <option value='HEARTS'>Hearts</option>
           <option value='DIAMONDS'>Diamonds</option>
           <option value='SPADES'>Spades</option>
@@ -48,39 +48,42 @@ const CustomHand = (props) => {
     )
   }
 
-  const showCustomHand = props.showCustomHand
-  // let length
-  // if (props.cards) {
-  //   length = props.cards.length
-  // }
+  const showCustomHandCheckbox = <div className='show-results'>
+    <input type='checkbox' inline='true' checked={props.showCustomHand} onChange={props.setShowCustomHand} />
+    <div>Show custom hand</div>
+  </div>
 
-  if (showCustomHand && props.cards.length > 3) {
+  if (props.cards.length === 5) {
     return (
-      <form onSubmit={handleSubmit}>
-        <div id='cardOptions'>
-          <div className='card-option'>
-            {showCardOptions('card1', props.cards[0].value)}
-            {showSuitOptions('suit1', props.cards[0].suit)}
-          </div>
-          <div className='card-option'>
-            {showCardOptions('card2', props.cards[1].value)}
-            {showSuitOptions('suit2', props.cards[1].suit)}
-          </div>
-          <div className='card-option'>
-            {showCardOptions('card3', props.cards[2].value)}
-            {showSuitOptions('suit3', props.cards[2].suit)}
-          </div>
-          <div className='card-option'>
-            {showCardOptions('card4', props.cards[3].value)}
-            {showSuitOptions('suit4', props.cards[3].suit)}
-          </div>
-          <div className='c-card-option'>
-            {showCardOptions('card5', props.cards[4].value)}
-            {showSuitOptions('suit5', props.cards[4].suit)}
-          </div>
+      <React.Fragment>
+        <div>{showCustomHandCheckbox}</div>
+        <div style={{ display: (props.showCustomHand ? 'flex' : 'none') }}>
+          <form onSubmit={handleSubmit}>
+            <div id='cardOptions'>
+              <div className='card-option'>
+                {showCardOptions('card1', props.cards[0].value)}
+                {showSuitOptions('suit1', props.cards[0].suit)}
+              </div>
+              <div className='card-option'>
+                {showCardOptions('card2', props.cards[1].value)}
+                {showSuitOptions('suit2', props.cards[1].suit)}
+              </div>
+              <div className='card-option'>
+                {showCardOptions('card3', props.cards[2].value)}
+                {showSuitOptions('suit3', props.cards[2].suit)}
+              </div>
+              <div className='card-option'>
+                {showCardOptions('card4', props.cards[3].value)}
+                {showSuitOptions('suit4', props.cards[3].suit)}
+              </div>
+              <div className='c-card-option'>
+                {showCardOptions('card5', props.cards[4].value)}
+                {showSuitOptions('suit5', props.cards[4].suit)}
+              </div>
+            </div>
+          </form >
         </div>
-        <button className='cribbage-button' type='submit' value='Hello'>Hide</button>
-      </form>
+      </React.Fragment>
     )
   } else {
     return (null)

@@ -18,16 +18,15 @@ class App extends Component {
       'hand': [],
       'customHand': [],
       'cardsLeft': 52,
+      //      'showResults': false,
       'showCustomHand': false
     }
   }
 
   componentWillUnmount() {
-    console.log('XXXXXXXXXXXXX App is unmounting')
   }
 
   componentDidMount() {
-    console.log('XXXXXXXXXXXXX App is mounting: ', this.state)
     const url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
     fetch(url)
       .then(response =>
@@ -161,14 +160,9 @@ class App extends Component {
     })
   }
 
-  setShowCustomHand(value) {
-    this.setState({
-      showCustomHand: value
-    })
-  }
-
-  showCustomHandForm() {
-    console.log('Showing custom hand form. ', this.props)
+  setShowCustomHand() {
+    let showCustomHand = this.state.showCustomHand
+    this.setState({ showCustomHand: !showCustomHand })
   }
 
   getCode(value, suit) {
@@ -176,16 +170,16 @@ class App extends Component {
   }
 
   alreadyExists1(position, value) {
-    console.log('alreadyExists - position: ', position)
-    console.log('alreadyExists - value: ', value)
-    console.log('code map stuff: ', this.codeMap[value])
+    // console.log('alreadyExists - position: ', position)
+    // console.log('alreadyExists - value: ', value)
+    // console.log('code map stuff: ', this.codeMap[value])
 
     //let's get the suit
     const suit = this.state.hand[position].suit
     let code = this.getCode(value, suit)
 
     for (let i = 0; i < this.state.hand.length; i++) {
-      console.log('Comparing... ', this.state.hand[i].code, ' to ', code)
+      //      console.log('Comparing... ', this.state.hand[i].code, ' to ', code)
       if (this.state.hand[i].code === code) {
         return true
       }
@@ -194,15 +188,15 @@ class App extends Component {
   }
 
   alreadyExists2(position, suit) {
-    console.log('alreadyExists - position: ', position)
-    console.log('alreadyExists - value: ', suit)
+    // console.log('alreadyExists - position: ', position)
+    // console.log('alreadyExists - value: ', suit)
 
     // let's get the code
     const code = `${this.state.hand[position].code.charAt(0)}${suit.charAt(0)}`
-    console.log('new code : ', code)
+    //  console.log('new code : ', code)
 
     for (let i = 0; i < this.state.hand.length; i++) {
-      console.log('Comparing... ', this.state.hand[i].code, ' to ', code)
+      //    console.log('Comparing... ', this.state.hand[i].code, ' to ', code)
       if (this.state.hand[i].code === code) {
         return true
       }
@@ -211,8 +205,8 @@ class App extends Component {
   }
 
   changeCard(card, value) {
-    console.log('changeCard - value: ', value)
-    console.log('code map stuff: ', this.codeMap[value])
+    //console.log('changeCard - value: ', value)
+    // console.log('code map stuff: ', this.codeMap[value])
     card.value = value
 
 
@@ -230,28 +224,28 @@ class App extends Component {
   }
 
   changeSuit(card, value) {
-    console.log('changeSuit - value: ', value)
+    //  console.log('changeSuit - value: ', value)
     card.suit = value
 
     // change last letter of code to firts letter of suit
     let suitChar = value.charAt(0)
-    console.log('suitChar: ', suitChar)
+    //  console.log('suitChar: ', suitChar)
     let newCode = card.code.charAt(0) + suitChar
     //newCode[1] = suitChar
     card.code = newCode
     let newImage = `https://deckofcardsapi.com/static/img/${newCode}.png`
     card.image = newImage
 
-    console.log('New card: ', card)
+    //  console.log('New card: ', card)
     return card
   }
 
   onCustomHandChange(name, value) {
     let position = name.charAt(name.length - 1) - 1
     // if name begins with 'suit'...
-    console.log('Custom hand has changed. The name is: ', name)
-    console.log('Custom hand has changed. The value is: ', value)
-    console.log('Custom hand has changed. The position is: ', position)
+    // console.log('Custom hand has changed. The name is: ', name)
+    // console.log('Custom hand has changed. The value is: ', value)
+    // console.log('Custom hand has changed. The position is: ', position)
 
     // determine if this already exists in the hand
     // console.log('Already exists result: ', this.alreadyExists(position, value))
@@ -260,26 +254,26 @@ class App extends Component {
     let card = { ...hand[position] }
     let newCard
     if (name.slice(0, 4) === 'card') {
-      console.log('Dealing with the card change')
+      //      console.log('Dealing with the card change')
       if (!this.alreadyExists1(position, value)) {
-        console.log('Making the change...')
+        //        console.log('Making the change...')
         newCard = this.changeCard(card, value)
         hand[position] = newCard
         this.setState({ hand })
       } else {
         swal('Oops!', 'You cannot have two identical cards in a hand.', 'warning')
-        console.log('NOT making the change...')
+        //        console.log('NOT making the change...')
       }
       //newCard = this.changeCard(card, value)
     } else if (name.slice(0, 4) === 'suit') {
-      console.log('Dealing with a suit change')
+      //      console.log('Dealing with a suit change')
       if (!this.alreadyExists2(position, value)) {
         newCard = this.changeSuit(card, value)
         hand[position] = newCard
         this.setState({ hand })
       } else {
         swal('Oops', 'You cannot have two identical cards in a hand.', 'warning')
-        console.log('NOT making the change...')
+        //        console.log('NOT making the change...')
       }
       //newCard = this.changeSuit(card, value)
     }
@@ -307,17 +301,15 @@ class App extends Component {
     }
     return (
       <div className='container'>
-        <h1 className='cribbage-text'>Cribbage Hand Tester</h1>
-        <p>Guess how many points this hand is worth.</p>
+        <h1 className='cribbage-text'>Cribbage Hand Practice Tool</h1>
+        <p>Practice your point counting skills.</p>
 
         <div className='result-row'>
           <React.Fragment>
-            <Hand getHand={this.getHand} sortHand={this.sortHand} showCustomHand={this.showCustomHandForm} setShowCustomHand={setShowCustomHand} cardsLeft={cardsLeft} cards={cards} buttonText={buttonText} />
+            <Hand getHand={this.getHand} sortHand={this.sortHand} cardsLeft={cardsLeft} cards={cards} buttonText={buttonText} />
           </React.Fragment>
         </div>
-        <div id='customHand'>
-          <CustomHand cards={cards} showCustomHand={showCustomHand} setShowCustomHand={setShowCustomHand} onCustomHandChange={onCustomHandChange} />
-        </div>
+        <CustomHand cards={cards} showCustomHand={showCustomHand} setShowCustomHand={setShowCustomHand} onCustomHandChange={onCustomHandChange} />
         <Results cards={cards} />
       </div>
     )
