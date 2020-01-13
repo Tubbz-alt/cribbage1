@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import PropTypes from 'prop-types'
 
 // Component Hand
@@ -8,11 +8,7 @@ const Hand = (props) => {
   const cardsLeft = props.cardsLeft
 
   let cardsImages = []
-  console.log('pppp1 ', cards.length)
 
-  for (let i = 0; i < cards.length; i++) {
-    console.log('ppppppp2')
-  }
   if (cards.length > 0) {
     cardsImages = cards.map((card, index) => {
       if (index !== 4) {
@@ -36,6 +32,7 @@ const Hand = (props) => {
     <div className='cribbage-parent'>
       <header className='cribbage-header'>
         <button className='cribbage-button' onClick={() => props.getHand()}>{buttonText}</button>
+        <button className='cribbage-button' onClick={() => props.sortHand()}>Sort Cards</button>
         <button className='cribbage-button' onClick={() => props.setShowCustomHand(true)}>Custom Hand</button>
       </header>
       <div>Cards remaining in deck: {cardsLeft}</div>

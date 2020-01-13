@@ -1,18 +1,16 @@
-import React from 'react';
-// import ReactDOM from 'react-dom';
-// import { withRouter } from 'react-router-dom'
-import '.././index.css';
+import React from 'react'
+import '.././index.css'
 
 // Component Hand
 const CustomHand = (props) => {
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     props.setShowCustomHand(false)
   }
 
   const handleChange = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     props.onCustomHandChange(event.target.name, event.target.value)
   }
 
@@ -51,10 +49,10 @@ const CustomHand = (props) => {
   }
 
   const showCustomHand = props.showCustomHand
-  let length
-  if (props.cards) {
-    length = props.cards.length
-  }
+  // let length
+  // if (props.cards) {
+  //   length = props.cards.length
+  // }
 
   if (showCustomHand && props.cards.length > 3) {
     return (
@@ -81,13 +79,11 @@ const CustomHand = (props) => {
             {showSuitOptions('suit5', props.cards[4].suit)}
           </div>
         </div>
-        <button className='cribbage-button' type="submit" value='Hello'>Hide</button>
+        <button className='cribbage-button' type='submit' value='Hello'>Hide</button>
       </form>
     )
   } else {
     return (null)
   }
 }
-
-
-export default CustomHand;
+export default CustomHand

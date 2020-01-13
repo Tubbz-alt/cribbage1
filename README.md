@@ -6,8 +6,10 @@ Test your ability to add up the points of a random cribbage hand and then compar
 
 ## Purpose
 
-- A fairly simple React app that is structured as a full deployable application
-- Gain experience in seeing runs, pairs and 15's in your hands
+- A React app that is structured as a full deployable application.
+- Let's you practice your cribbage skills at determining the points in a cribbage hand
+- Gain experience in seeing runs, pairs and 15's
+- Features include hiding the results, showing the results and even creating a custom hand
 
 ## Author
 

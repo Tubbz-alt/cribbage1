@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
 import swal from 'sweetalert'
-// import { Link } from 'react-router-dom'
-//import { withRouter } from 'react-router-dom'
-// import Deck from './components/Deck'
-// import { BrowserRouter, Route } from 'react-router-dom'
 import Hand from './components/Hand'
 import Results from './components/Results'
 import CustomHand from './forms/CustomHand'
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     //    this.turnOverCard = this.turnOverCard.bind(this)
     this.getHand = this.getHand.bind(this)
+    this.sortHand = this.sortHand.bind(this)
     this.setShowCustomHand = this.setShowCustomHand.bind(this)
     this.onCustomHandChange = this.onCustomHandChange.bind(this)
     // this.state = {}
@@ -60,25 +57,21 @@ class App extends Component {
     KING: 'K'
   }
 
-  // turnOverCard() {
-  //   // console.log('I am getting first card from the deck: ', deck_id)
-  //   const url = 'https://deckofcardsapi.com/api/deck/' + this.state.deck_id + '/draw/?count=1'
-  //   fetch(url)
-  //     .then(response =>
-  //       response.json()
-  //     )
-  //     .then(result => {
-  //       // console.log('GET Crib state', this.state)
-  //       // console.log('GT Crib result ', result)
-  //       //console.log('CCCCCCC ', this)
-  //       // console.log('GET Crib cards', result.cards[0])
-  //       this.setState({
-  //         communityCard: result.cards[0],
-  //         cardsLeft: result.remaining
-  //         //communityCard: {value: '5', code: '5h', image: 'https://deckofcardsapi.com/static/img/5H.png'}
-  //       })
-  //     });
-  // }
+  valueMap = {
+    ACE: 'A',
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    9: 9,
+    10: 10,
+    JACK: 11,
+    QUEEN: 12,
+    KING: 13
+  }
 
   // // fake results of a pair
   getHandTemp() {
@@ -108,14 +101,10 @@ class App extends Component {
    */
   getHand() {
     // make sure there are enough cards left in the deck
-    console.log('FFFFFFFFFFFFFFFFFFFFFF ', this.state.cardsLeft)
     let url
-    console.log('ffff11111111111111111111')
     if (this.state.cardsLeft < 5) {
-      console.log('ffff2222222222222')
-      swal('New deck', 'There are not enough cards left in the deck. Now using new deck', 'info');
+      swal('New deck', 'There are not enough cards left in the deck. Now using new deck', 'info')
       url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
-      console.log("Here i go to fetch....")
       fetch(url)
         .then(response =>
           response.json()
@@ -138,7 +127,7 @@ class App extends Component {
                 cardsLeft: result.remaining
               })
             })
-        });
+        })
     } else {
       url = 'https://deckofcardsapi.com/api/deck/' + this.state.deck_id + '/draw/?count=5'
       fetch(url)
@@ -150,8 +139,26 @@ class App extends Component {
             hand: result.cards,
             cardsLeft: result.remaining
           })
-        });
+        })
     }
+  }
+
+  compareCardValues(cardA, cardB) {
+    let comparison = 0
+    if (cardA.val > cardB.val) {
+      comparison = 1
+    } else if (cardA.val < cardB.val) {
+      comparison = -1
+    }
+    return comparison
+  }
+
+  sortHand() {
+    let sortedHand = [...this.state.hand]
+    sortedHand.sort(this.compareCardValues)
+    this.setState({
+      hand: sortedHand
+    })
   }
 
   setShowCustomHand(value) {
@@ -260,7 +267,7 @@ class App extends Component {
         hand[position] = newCard
         this.setState({ hand })
       } else {
-        swal("Oops!", "You cannot have two identical cards in a hand.", "warning");
+        swal('Oops!', 'You cannot have two identical cards in a hand.', 'warning')
         console.log('NOT making the change...')
       }
       //newCard = this.changeCard(card, value)
@@ -271,7 +278,7 @@ class App extends Component {
         hand[position] = newCard
         this.setState({ hand })
       } else {
-        swal("Oops!", "You cannot have two identical cards in a hand.", "warning");
+        swal('Oops', 'You cannot have two identical cards in a hand.', 'warning')
         console.log('NOT making the change...')
       }
       //newCard = this.changeSuit(card, value)
@@ -284,8 +291,6 @@ class App extends Component {
     const showCustomHand = this.state.showCustomHand
     const setShowCustomHand = this.setShowCustomHand
     const onCustomHandChange = this.onCustomHandChange
-
-    console.log('==================> the state ', showCustomHand)
 
     let cards
     if (this.state.hand) {
@@ -301,14 +306,13 @@ class App extends Component {
       buttonText = 'Get new cards'
     }
     return (
-      <div className="container">
+      <div className='container'>
         <h1 className='cribbage-text'>Cribbage Hand Tester</h1>
         <p>Guess how many points this hand is worth.</p>
 
-
         <div className='result-row'>
           <React.Fragment>
-            <Hand getHand={this.getHand} showCustomHand={this.showCustomHandForm} setShowCustomHand={setShowCustomHand} cardsLeft={cardsLeft} cards={cards} buttonText={buttonText} />
+            <Hand getHand={this.getHand} sortHand={this.sortHand} showCustomHand={this.showCustomHandForm} setShowCustomHand={setShowCustomHand} cardsLeft={cardsLeft} cards={cards} buttonText={buttonText} />
           </React.Fragment>
         </div>
         <div id='customHand'>
@@ -316,11 +320,7 @@ class App extends Component {
         </div>
         <Results cards={cards} />
       </div>
-    );
+    )
   }
 }
-// Create a new component that is "connected" (to borrow redux
-// terminology) to the router.
-// const AppWithRouter = withRouter(App);
-
-export default App;
+export default App
