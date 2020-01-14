@@ -409,7 +409,7 @@ img.result-card {
   }
   select.custom-select {
     width: 128px;
-    font-size: 8rem;
+    font-size: .8rem;
   }
   button.cribbage-button {
     width: 150px;
