@@ -50,16 +50,16 @@ const CustomHand = (props) => {
 
   const showCustomHandCheckbox = <div className='show-results'>
     <input type='checkbox' inline='true' checked={props.showCustomHand} onChange={props.setShowCustomHand} />
-    <div>Show custom hand</div>
+    <div class='cribbage-checkbox'>Show custom hand</div>
   </div>
 
   if (props.cards.length === 5) {
     return (
       <React.Fragment>
         <div>{showCustomHandCheckbox}</div>
-        <div style={{ display: (props.showCustomHand ? 'flex' : 'none') }}>
+        <div style={{ display: (props.showCustomHand ? 'block' : 'none') }}>
           <form onSubmit={handleSubmit}>
-            <div id='cardOptions'>
+            <div id='card-options'>
               <div className='card-option'>
                 {showCardOptions('card1', props.cards[0].value)}
                 {showSuitOptions('suit1', props.cards[0].suit)}
@@ -76,7 +76,7 @@ const CustomHand = (props) => {
                 {showCardOptions('card4', props.cards[3].value)}
                 {showSuitOptions('suit4', props.cards[3].suit)}
               </div>
-              <div className='c-card-option'>
+              <div className='card-option'>
                 {showCardOptions('card5', props.cards[4].value)}
                 {showSuitOptions('suit5', props.cards[4].suit)}
               </div>

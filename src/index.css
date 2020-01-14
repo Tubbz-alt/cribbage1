@@ -192,34 +192,40 @@ header.cribbage-header {
 }
 
 section.cribbage-section {
-  border: 1px green dashed;
   display: flex;
   align-items: right;
 
 }
 
 button.cribbage-button {
-  width: 150px;
-  height: 40px;
-  padding: 10px;
-  margin: 12px;
+  width: 90px;
+  height: 30px;
+  padding: 4px;
+  margin: 3px;
   color: white;
   background: #4F4A41;
-  border: #6E6658 1px solid
+  border: #6E6658 1px solid;
+  font-size: .6rem
 }
 
+p.cribbage.text {
+  font-size: 0.8rem;
+  color: white;
+}
 h1.cribbage-text {
-  color: white
+  font-size: 1.2rem;
+  color: white;
 }
 h2.cribbage-text {
-  color: white
+  color: white;
 }
 h3.cribbage-text {
-  color: white
+  color: white;
+  font-size: .7rem
 }
 
 div.cribbage-parent {
-  width: 100%
+  width: 100%;
 }
 
 section.cribbage-results {
@@ -246,33 +252,32 @@ div.result-text {
 div.show-results {
   display: flex;
   justify-content: left;
+  margin: 10px;
 }
 
 div.CustomHandForm {
   width: 90%;
   margin: 50px 10%;
 }
-div#card-options {
-  display: flex;
-  width: 100%;
-}
 
 div.CustomHandForm > label {
    display:block;
 }
 
-div.card-option {
-  padding: 0px;
-  width: 128px;
-  margin: 4px;
-  float: left;
+div#card-options {
+  display: flex;
+  width: 100%;
+  margin: 10px;
 }
 
-div.c-card-option {
+div.card-option {
   padding: 0px;
-  width: 128px;
+  width: 51px;
   margin: 4px;
-  float: right;
+}
+
+div.card-option:nth-last-child(1) {
+  margin-left: auto;
 }
 
 select.custom-select {
@@ -281,27 +286,26 @@ select.custom-select {
   outline: none;
   background: #4F4A41;
   margin-bottom: .25rem;
-  font-size: .8rem;
-  width: 128px;
+  font-size: .5rem;
+  width: 51px;
   max-width: 100%;
   line-height: 1;
+}
+div.cribbage-checkbox {
+    font-size: .7rem;
+}
+div.cribbage-points > span {
+    font-size: .7rem;
 }
 
 select.custom:hover {
 border: D9B08C;
 }
 
-img.result-card {
-  height: 90px;
-  width: 64px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  float: left;
-}
 div.cribbage-points {
   display: inline-block;
   height: 100%;
-  width: 200px;
+  width: 40%;
   margin-left: auto;
   text-align: left;
   vertical-align: middle;
@@ -312,19 +316,117 @@ div.cribbage-points span {
   line-height: normal;
 }
 img.card {
-  height: 180px ;
-  width: 128px;
+  height:72px ;
+  width: 51px;
   margin: 4px;
   padding: 0px;
   float: left;
 }
 img.c-card {
-  height: 180px ;
-  width: 128px;
+  height: 72px ;
+  width: 51px;
   padding: 0px;
-  margin: 4px;
-  /*margin-left: auto;*/
+  margin: 2px;
   float: right;
+}
+img.result-card {
+  height: 36px;
+  width: 27px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+}
+
+/* Cribbage app mdeia queries */
+
+/* #### Tablets Portrait or Landscape #### */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px){
+  h1.cribbage-text {
+    font-size: 1.5rem;
+  }
+  h3.cribbage-text {
+    font-size: 1.3rem;
+  }
+  img.card {
+    height: 135px ;
+    width: 96px;
+    margin: 3px;
+  }
+  img.c-card {
+    height: 135px ;
+    width: 96px;
+    margin: 4px;
+  }
+  img.result-card {
+    height: 67px;
+    width: 48px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  select.custom-select {
+    width: 96px;
+    font-size: .7rem;
+  }
+  button.cribbage-button {
+    width: 112px;
+    height: 30px;
+    padding: 8px;
+    margin: 9px;
+    font-size: .8rem;
+  }
+  div.cribbage-checkbox {
+    font-size: .8rem;
+  }
+  div.cribbage-points > span {
+      font-size: .8rem;
+  }
+  div.card-option {
+    width: 96px;
+  }
+}
+
+/* #### Desktops #### */
+@media screen and (min-width: 1024px){
+  h1.cribbage-text {
+    font-size: 2rem;
+  }
+  h3.cribbage-text {
+    font-size: 1.7rem;
+  }
+  img.card {
+    height: 180px ;
+    width: 128px;
+  }
+  img.c-card {
+    height: 180px ;
+    width: 128px;
+  }
+  img.result-card {
+    height: 90px;
+    width: 64px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+  }
+  select.custom-select {
+    width: 128px;
+    font-size: 8rem;
+  }
+  button.cribbage-button {
+    width: 150px;
+    height: 40px;
+    padding: 10px;
+    margin: 12px;
+    font-size: 1rem;
+  }
+  div.cribbage-checkbox {
+    font-size: 1rem;
+  }
+  div.cribbage-points > span {
+      font-size: 1rem;
+  }
+  div.card-option {
+    width: 128px;
+  }
 }
 
 p,

@@ -34,7 +34,7 @@ const Hand = (props) => {
         <button className='cribbage-button' onClick={() => props.getHand()}>{buttonText}</button>
         <button className='cribbage-button' onClick={() => props.sortHand()}>Sort Cards</button>
       </header>
-      <div>Cards remaining in deck: {cardsLeft}</div>
+      <div><h3 className='cribbage-text'>Cards remaining in deck: {cardsLeft}</h3></div>
       <section>
         <div>{cardsImages}</div>
       </section>
