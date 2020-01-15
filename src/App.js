@@ -7,18 +7,15 @@ import CustomHand from './forms/CustomHand'
 class App extends Component {
   constructor(props) {
     super(props)
-    //    this.turnOverCard = this.turnOverCard.bind(this)
     this.getHand = this.getHand.bind(this)
     this.sortHand = this.sortHand.bind(this)
     this.setShowCustomHand = this.setShowCustomHand.bind(this)
     this.onCustomHandChange = this.onCustomHandChange.bind(this)
-    // this.state = {}
     this.state = {
       'deck': [],
       'hand': [],
       'customHand': [],
       'cardsLeft': 52,
-      //      'showResults': false,
       'showCustomHand': false
     }
   }
@@ -40,6 +37,9 @@ class App extends Component {
       })
   }
 
+  /**
+    * Used to map the value of the card to the code used by the cards API
+    */
   codeMap = {
     ACE: 'A',
     2: 2,
@@ -56,47 +56,15 @@ class App extends Component {
     KING: 'K'
   }
 
-  valueMap = {
-    ACE: 'A',
-    2: 2,
-    3: 3,
-    4: 4,
-    5: 5,
-    6: 6,
-    7: 7,
-    8: 8,
-    9: 9,
-    10: 10,
-    JACK: 11,
-    QUEEN: 12,
-    KING: 13
-  }
-
-  // // fake results of a pair
-  getHandTemp() {
-    const results = [
-      { value: '4', code: '4c', image: 'https://deckofcardsapi.com/static/img/4C.png', suit: 'CLUBS' },
-      { value: '2', code: '2c', image: 'https://deckofcardsapi.com/static/img/2C.png', suit: 'CLUBS' },
-      { value: '5', code: '5c', image: 'https://deckofcardsapi.com/static/img/5C.png', suit: 'CLUBS' },
-      { value: '3', code: '3c', image: 'https://deckofcardsapi.com/static/img/3C.png', suit: 'CLUBS' },
-      { value: '7', code: '7c', image: 'https://deckofcardsapi.com/static/img/7C.png', suit: 'CLUBS' },
-    ]
-    this.setState({
-      hand: results
-    })
-  }
-
   /*
-   * [cards]
+   * Gets a hand (5 cards) from the deckofcards API. A deck must exist.
+   *
+   * @returns {Cards[]} Array of 5 cards
    * card.code        eg. JS, AD, 9H
    * card.image       eg.
    * card.cardsImages
    * card. suits      eg. SPADES, DIAMONDS, HEARTS
    * card.value       eg. JACK, ACE, 9
-   * card.code        eg.
-   *
-   *
-   *
    */
   getHand() {
     // make sure there are enough cards left in the deck
@@ -142,6 +110,14 @@ class App extends Component {
     }
   }
 
+  /**
+     * Compares two cards to determine if the 'val' property of a card in
+     * greater of less than another card. Used by the sartHand(method)
+     *
+     * @param {Card} card Instance of a card.
+     * @param {Card} card Instance of the card to compare to.
+     * @returns {number} '1' if greater than, '-1' if less than
+     */
   compareCardValues(cardA, cardB) {
     let comparison = 0
     if (cardA.val > cardB.val) {
@@ -152,6 +128,10 @@ class App extends Component {
     return comparison
   }
 
+  /**
+     * Sorts the hand based on the val property of each card in the hand
+     *
+     */
   sortHand() {
     let sortedHand = [...this.state.hand]
     sortedHand.sort(this.compareCardValues)
@@ -160,123 +140,118 @@ class App extends Component {
     })
   }
 
+  /**
+     * Toggles the value of the 'showCustomHand' state value
+     *
+     */
   setShowCustomHand() {
     let showCustomHand = this.state.showCustomHand
     this.setState({ showCustomHand: !showCustomHand })
   }
 
+  /**
+     * Generates the correct card code based on value and suit
+     *
+     * @param {string} value value of the card
+     * @param {string} suit suit of the card
+     * @return {string} the generated code
+     */
   getCode(value, suit) {
     return `${this.codeMap[value]}${suit.charAt(0)}`
   }
 
-  alreadyExists1(position, value) {
-    // console.log('alreadyExists - position: ', position)
-    // console.log('alreadyExists - value: ', value)
-    // console.log('code map stuff: ', this.codeMap[value])
 
-    //let's get the suit
-    const suit = this.state.hand[position].suit
-    let code = this.getCode(value, suit)
-
+  /**
+     * Determine if the given card already exists in the hand
+     *
+     * @param {number} position the position in the hand of the card being changed
+     * @param {string} value value of the card (could be the value or the suit)
+     * @param {string} type flag to indicate if the suit or the value is changing
+     * @return {boolean} true if the card already exists in the hand, false if not.
+     */
+  alreadyExists(position, value, type) {
+    let code
+    if (type === 'card') {
+      const suit = this.state.hand[position].suit
+      code = this.getCode(value, suit)
+    }
+    // suit part
+    if (type === 'suit') {
+      const val = this.state.hand[position].value
+      code = this.getCode(val, value)
+    }
     for (let i = 0; i < this.state.hand.length; i++) {
-      //      console.log('Comparing... ', this.state.hand[i].code, ' to ', code)
       if (this.state.hand[i].code === code) {
         return true
       }
     }
     return false
+
   }
 
-  alreadyExists2(position, suit) {
-    // console.log('alreadyExists - position: ', position)
-    // console.log('alreadyExists - value: ', suit)
-
-    // let's get the code
-    const code = `${this.state.hand[position].code.charAt(0)}${suit.charAt(0)}`
-    //  console.log('new code : ', code)
-
-    for (let i = 0; i < this.state.hand.length; i++) {
-      //    console.log('Comparing... ', this.state.hand[i].code, ' to ', code)
-      if (this.state.hand[i].code === code) {
-        return true
-      }
-    }
-    return false
-  }
-
+  /**
+     * Change the value of a card in the hand
+     *
+     * @param {card} card the card that is to be changed
+     * @param {string} value the new value
+     * @return {card} card the new card with the updated value
+     */
   changeCard(card, value) {
-    //console.log('changeCard - value: ', value)
-    // console.log('code map stuff: ', this.codeMap[value])
     card.value = value
 
-
-    // change first letter of code to firts letter of suit
-    let cardChar = this.codeMap[value]
-    // console.log('suitChar: ', suitChar)
-    let newCode = cardChar + card.code.charAt(1)
-    // //newCode[1] = suitChar
+    const newCode = this.getCode(value, card.suit)
     card.code = newCode
-    let newImage = `https://deckofcardsapi.com/static/img/${newCode}.png`
+    const newImage = `https://deckofcardsapi.com/static/img/${newCode}.png`
     card.image = newImage
-    //
-    // console.log('New card: ', card)
     return card
   }
 
-  changeSuit(card, value) {
-    //  console.log('changeSuit - value: ', value)
-    card.suit = value
-
-    // change last letter of code to firts letter of suit
-    let suitChar = value.charAt(0)
-    //  console.log('suitChar: ', suitChar)
-    let newCode = card.code.charAt(0) + suitChar
-    //newCode[1] = suitChar
+  /**
+     * Change the suit of a card in the hand
+     *
+     * @param {card} card the card that is to be changed
+     * @param {string} suit the new suit
+     * @return {card} the new card with the updated suit
+     */
+  changeSuit(card, suit) {
+    card.suit = suit
+    const newCode = this.getCode(card.value, suit)
     card.code = newCode
-    let newImage = `https://deckofcardsapi.com/static/img/${newCode}.png`
+    const newImage = `https://deckofcardsapi.com/static/img/${newCode}.png`
     card.image = newImage
-
-    //  console.log('New card: ', card)
     return card
   }
 
+  /**
+     * Event fires when a card in the hand has been changed
+     *
+     * @param {string} name item to be changed ('card' or 'suit')
+     * @param {string} value the new value or suit
+     */
   onCustomHandChange(name, value) {
+    // can determine the position in the hand array from he last character of the name
     let position = name.charAt(name.length - 1) - 1
-    // if name begins with 'suit'...
-    // console.log('Custom hand has changed. The name is: ', name)
-    // console.log('Custom hand has changed. The value is: ', value)
-    // console.log('Custom hand has changed. The position is: ', position)
-
-    // determine if this already exists in the hand
-    // console.log('Already exists result: ', this.alreadyExists(position, value))
-
-    let hand = this.state.hand
-    let card = { ...hand[position] }
+    let hand = [...this.state.hand]
+    let card = hand[position]
     let newCard
-    if (name.slice(0, 4) === 'card') {
-      //      console.log('Dealing with the card change')
-      if (!this.alreadyExists1(position, value)) {
-        //        console.log('Making the change...')
+    let toChange = name.slice(0, 4)  // 'suit' or 'card'
+    if (toChange === 'card') {
+      if (!this.alreadyExists(position, value, toChange)) {
         newCard = this.changeCard(card, value)
-        hand[position] = newCard
-        this.setState({ hand })
       } else {
         swal('Oops!', 'You cannot have two identical cards in a hand.', 'warning')
-        //        console.log('NOT making the change...')
+        return
       }
-      //newCard = this.changeCard(card, value)
-    } else if (name.slice(0, 4) === 'suit') {
-      //      console.log('Dealing with a suit change')
-      if (!this.alreadyExists2(position, value)) {
+    } else if (toChange === 'suit') {
+      if (!this.alreadyExists(position, value, toChange)) {
         newCard = this.changeSuit(card, value)
-        hand[position] = newCard
-        this.setState({ hand })
       } else {
         swal('Oops', 'You cannot have two identical cards in a hand.', 'warning')
-        //        console.log('NOT making the change...')
+        return
       }
-      //newCard = this.changeSuit(card, value)
     }
+    hand[position] = newCard
+    this.setState({ hand })
   }
 
   render() {

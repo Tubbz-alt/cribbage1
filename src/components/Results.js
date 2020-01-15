@@ -22,9 +22,12 @@ class Results extends Component {
     ]
   }
 
-  // highlight the cards in the hand
+  /**
+     * Highlight the cards in the hand that are part of the result
+     *
+     * @param {cards[]} Array of 5 cards
+     */
   addHighlight(cards) {
-
     const cardsToHighlight = cards.result ? cards.result : cards
     for (var i = 0; i < cardsToHighlight.length; i++) {
       const elem = document.getElementById(cardsToHighlight[i].code)
@@ -34,6 +37,12 @@ class Results extends Component {
       }
     }
   }
+
+  /**
+     * Remove highlights on the cards.
+     *
+     * @param {cards[]} Array of 5 cards
+     */
   removeHighlight(cards) {
 
     const cardsToRemoveHighlight = cards.result ? cards.result : cards
@@ -45,7 +54,15 @@ class Results extends Component {
     }
   }
 
-  // tallyTheScores(pairResult, fullSumsResult, runsResult, nibsResult) {
+  /**
+     * Adds up all the scores from the various results
+     *
+     * @param {cards[]} card Array of cards that are pairs
+     * @param {cards[]} card Array of cards that sum to 15
+     * @param {cards[]} card Array of cards that form a run
+     * @param {cards[]} card Array of cards that have the same suit (4 or 5)
+     * @param {cards[]} card Array of 2 cards that form nibs
+     */
   tallyTheScores(pairResult, sumsResult, runsResult, flushResult, nibsResult) {
     let score = 0
     for (let i = 0; i < pairResult.length; i++) {
@@ -78,27 +95,10 @@ class Results extends Component {
 
     if (fullHand.length === 5) {
       sumsResult = getFifteenSums(fullHand)
-      // console.log('******  S U M   R E S U L T S')
-      // console.log(sumsResult)
-
       runsResult = getRuns(fullHand)
-      // console.log('******  R U N S  R E S U L T S')
-      // console.log('======> runsResult ', runsResult)
-      // console.log(runsResult)
-
       pairResults = getPairs(fullHand)
-      // console.log('****** P A I R   R E S U L T S')
-      // console.log(pairResults)
-
       flushResult = getFlushes(fullHand)
-      // console.log('****** F L U S H   R E S U L T S')
-      // console.log(flushResult)
-
       nibsResult = getNibs(cards)
-      // console.log('******  N I B S   R E S U L T S')
-      // console.log('======> nibsResult ', nibsResult)
-      // console.log(nibsResult)
-
       // add all the results of the sums
       totalScore = this.tallyTheScores(pairResults, sumsResult, runsResult, flushResult, nibsResult)
 
