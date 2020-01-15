@@ -106,7 +106,7 @@ class Results extends Component {
 
     const showResultsCheckbox = <div className='show-results'>
       <input type='checkbox' inline='true' checked={showResults} onChange={() => { this.setState({ showResults: !showResults }) }} />
-      <div class='cribbage-checkbox'>Show results</div>
+      <div class='cribbage-checkbox'>{showResults ? 'Hide results' : 'Show results'}</div>
     </div>
 
     // Only show results if the full hand has been dealt

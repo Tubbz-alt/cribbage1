@@ -50,7 +50,7 @@ const CustomHand = (props) => {
 
   const showCustomHandCheckbox = <div className='show-results'>
     <input type='checkbox' inline='true' checked={props.showCustomHand} onChange={props.setShowCustomHand} />
-    <div class='cribbage-checkbox'>Show custom hand</div>
+    <div class='cribbage-checkbox'>Modify your cards</div>
   </div>
 
   if (props.cards.length === 5) {

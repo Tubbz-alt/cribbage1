@@ -270,7 +270,7 @@ class App extends Component {
 
     let buttonText = ''
     if (cardsLeft === 52) {
-      buttonText = 'Reveal Cards'
+      buttonText = 'Let\'s play'
     } else {
       buttonText = 'Get new cards'
     }
