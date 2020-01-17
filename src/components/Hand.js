@@ -42,10 +42,17 @@ const Hand = (props) => {
   )
 }
 
-Hand.proptypes = {
-  cards: PropTypes.array.isReqired,
-  buttonText: PropTypes.string.isReqired,
-  cardsLeft: PropTypes.number.isReqired
+Hand.propTypes = {
+  getHand: PropTypes.func.isRequired,
+  sortHand: PropTypes.func.isRequired,
+  buttonText: PropTypes.string.isRequired,
+  cardsLeft: PropTypes.number.isRequired,
+  cards: PropTypes.arrayOf(PropTypes.shape({
+    suit: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired,
+  })).isRequired,
 }
 
 export default Hand

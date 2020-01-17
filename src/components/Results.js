@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { getPairs, getFifteenSums, getFlushes, getNibs, getRuns } from '.././cribbage.js'
+const uuid = require('uuid/v4')
 
 class Results extends Component {
   constructor(props) {
@@ -105,14 +106,13 @@ class Results extends Component {
     }
 
     const showResultsCheckbox = <div className='show-results'>
-      <input type='checkbox' inline='true' checked={showResults} onChange={() => { this.setState({ showResults: !showResults }) }} />
-      <div class='cribbage-checkbox'>{showResults ? 'Hide results' : 'Show results'}</div>
+      <label className='cribbage-checkbox'><input type='checkbox' inline='true' checked={showResults} onChange={() => { this.setState({ showResults: !showResults }) }} />{showResults ? 'Hide results' : 'Show results'}</label>
     </div>
 
     // Only show results if the full hand has been dealt
     if (fullHand.length === 5) {
       displayPairs = <div>{pairResults.map(result =>
-        <div>
+        <div key={uuid()}>
           <section className='cribbage-results' onMouseOver={() => this.addHighlight(result)} onMouseOut={() => this.removeHighlight(result)}>
             <div className='card-result'>{result.result.map(card =>
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
@@ -125,7 +125,7 @@ class Results extends Component {
       )}</div>
 
       displaySums = <div>{sumsResult.map(result =>
-        <div>
+        <div key={uuid()}>
           <section className='cribbage-results' onMouseOver={() => this.addHighlight(result)} onMouseOut={() => this.removeHighlight(result)}>
             <div className='card-result'>{result.map(card =>
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
@@ -137,7 +137,7 @@ class Results extends Component {
       )}</div>
 
       displayRuns = <div>{runsResult.map(result =>
-        <div>
+        <div key={uuid()}>
           <section className='cribbage-results' onMouseOver={() => this.addHighlight(result)} onMouseOut={() => this.removeHighlight(result)}>
             <div className='card-result'>{result.map(card =>
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
@@ -175,7 +175,7 @@ class Results extends Component {
     }
 
     if (fullHand.length === 5) {
-      return <div>
+      return <React.Fragment>
         <div>{showResultsCheckbox}</div>
         <div style={{ display: (showResults ? 'block' : 'none') }}>
           <h3 className='cribbage-text'>Score = {totalScore}</h3>
@@ -185,7 +185,7 @@ class Results extends Component {
           {displayFlush}
           {displayNibs}
         </div>
-      </div>
+      </React.Fragment>
     } else {
       return (
         <div>
@@ -199,9 +199,19 @@ class Results extends Component {
   }
 }
 
-Results.proptypes = {
-  cards: PropTypes.array.isReqired,
-  card: PropTypes.object.isReqired
+Results.propTypes = {
+  cards: PropTypes.arrayOf(PropTypes.shape({
+    suit: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired
+  })).isRequired,
+  card: PropTypes.shape({
+    suit: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired
+  })
 }
 
 export default Results

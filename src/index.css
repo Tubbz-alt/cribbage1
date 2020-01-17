@@ -291,7 +291,7 @@ select.custom-select {
   max-width: 100%;
   line-height: 1;
 }
-div.cribbage-checkbox {
+label.cribbage-checkbox {
     font-size: .7rem;
 }
 div.cribbage-points > span {
@@ -374,7 +374,7 @@ img.result-card {
     margin: 9px;
     font-size: .8rem;
   }
-  div.cribbage-checkbox {
+  label.cribbage-checkbox {
     font-size: .8rem;
   }
   div.cribbage-points > span {
@@ -418,7 +418,7 @@ img.result-card {
     margin: 12px;
     font-size: 1rem;
   }
-  div.cribbage-checkbox {
+  label.cribbage-checkbox {
     font-size: 1rem;
   }
   div.cribbage-points > span {
