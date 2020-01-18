@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/cribbage1/static/js/runtime~main.daa8ac5a.js"
   },
   {
-    "revision": "5b578c15330b90d2860b",
-    "url": "/cribbage1/static/js/main.5b578c15.chunk.js"
+    "revision": "a7e9f9f16b3e15c26049",
+    "url": "/cribbage1/static/js/main.a7e9f9f1.chunk.js"
   },
   {
     "revision": "f556066356538ceb59e9",
     "url": "/cribbage1/static/js/1.f5560663.chunk.js"
   },
   {
-    "revision": "5b578c15330b90d2860b",
-    "url": "/cribbage1/static/css/main.0305f7a9.chunk.css"
+    "revision": "a7e9f9f16b3e15c26049",
+    "url": "/cribbage1/static/css/main.c43281fc.chunk.css"
   },
   {
-    "revision": "9df0a88360a5ed7d371b878f35bbd828",
+    "revision": "2a5cb157b1a50ae5d2af0d5293064afe",
     "url": "/cribbage1/index.html"
   }
 ];
