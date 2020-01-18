@@ -234,7 +234,7 @@ class App extends Component {
     let hand = [...this.state.hand]
     let card = hand[position]
     let newCard
-    let toChange = name.slice(0, 4)  // 'suit' or 'card'
+    let toChange = name.slice(0, 4)   // 'suit' or 'card'
     if (toChange === 'card') {
       if (!this.alreadyExists(position, value, toChange)) {
         newCard = this.changeCard(card, value)
@@ -277,7 +277,7 @@ class App extends Component {
     return (
       <div className='container'>
         <h1 className='cribbage-text'>Cribbage Hand Practice Tool</h1>
-        <p>Practice your point counting skills.</p>
+        <p className='cribbage-text'>Practice your point counting skills.</p>
 
         <div className='result-row'>
           <React.Fragment>

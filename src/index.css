@@ -214,7 +214,7 @@ p.cribbage.text {
 }
 h1.cribbage-text {
   font-size: 1.2rem;
-  color: white;
+  color: white
 }
 h2.cribbage-text {
   color: white;
@@ -267,7 +267,7 @@ div.CustomHandForm > label {
 div#card-options {
   display: flex;
   width: 100%;
-  margin: 10px;
+  margin: 5px;
 }
 
 div.card-option {
@@ -293,6 +293,7 @@ select.custom-select {
 }
 label.cribbage-checkbox {
     font-size: .7rem;
+    font-weight: normal;
 }
 div.cribbage-points > span {
     font-size: .7rem;
@@ -337,10 +338,10 @@ img.result-card {
   float: left;
 }
 
-/* Cribbage app mdeia queries */
+/* Cribbage app media queries */
 
 /* #### Tablets Portrait or Landscape #### */
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px){
+@media screen and (min-width: 768px) and (max-width: 1023px){
   h1.cribbage-text {
     font-size: 1.5rem;
   }
@@ -370,12 +371,14 @@ img.result-card {
   button.cribbage-button {
     width: 112px;
     height: 30px;
-    padding: 8px;
-    margin: 9px;
+    padding: 6px;
+    margin: 7px;
     font-size: .8rem;
   }
   label.cribbage-checkbox {
     font-size: .8rem;
+    font-weight: normal;
+
   }
   div.cribbage-points > span {
       font-size: .8rem;
@@ -414,12 +417,13 @@ img.result-card {
   button.cribbage-button {
     width: 150px;
     height: 40px;
-    padding: 10px;
-    margin: 12px;
+    padding: 8px;
+    margin: 10px;
     font-size: 1rem;
   }
   label.cribbage-checkbox {
     font-size: 1rem;
+    font-weight: normal;
   }
   div.cribbage-points > span {
       font-size: 1rem;

@@ -118,7 +118,7 @@ class Results extends Component {
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
             </div>
-            <div className='cribbage-points'><span>{result.description} - Points: {result.score}</span></div>
+            <div className='cribbage-points'><span className='cribbage-text'>{result.description} - Points: {result.score}</span></div>
           </section>
 
         </div>
@@ -131,7 +131,7 @@ class Results extends Component {
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
             </div>
-            <div className='cribbage-points'><span>Sum to 15 - Points: 2</span></div>
+            <div className='cribbage-points'><span className='cribbage-text'>Sum to 15 - Points: 2</span></div>
           </section>
         </div>
       )}</div>
@@ -155,7 +155,7 @@ class Results extends Component {
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
             </div>
-            <div className='cribbage-points'><span>Nibs - Points: 1</span></div>
+            <div className='cribbage-points'><span className='cribbage-text'>Nibs - Points: 1</span></div>
           </section>
         </div>
       }
@@ -166,7 +166,7 @@ class Results extends Component {
               <img className='result-card' src={card.image} key={card.code} alt={card.code} />
             )}
             </div>
-            <div className='cribbage-points'><span>Flush - Points: {flushResult.length}</span></div>
+            <div className='cribbage-points'><span className='cribbage-text'>Flush - Points: {flushResult.length}</span></div>
           </section>
         </div>
       } else {
@@ -178,7 +178,7 @@ class Results extends Component {
       return <React.Fragment>
         <div>{showResultsCheckbox}</div>
         <div style={{ display: (showResults ? 'block' : 'none') }}>
-          <h3 className='cribbage-text'>Score = {totalScore}</h3>
+          <p className='cribbage-text'>Score = {totalScore}</p>
           {displaySums}
           {displayRuns}
           {displayPairs}
@@ -190,7 +190,6 @@ class Results extends Component {
       return (
         <div>
           {showResultsCheckbox}
-          <div>Nothing to display</div>
         </div>
 
       )
