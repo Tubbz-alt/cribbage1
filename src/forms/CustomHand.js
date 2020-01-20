@@ -16,7 +16,7 @@ const CustomHand = (props) => {
 
   const showCardOptions = (name, value) => {
     return (
-      <div className='the-cards'>
+      <div>
         <select className='custom-select' value={value} name={name} onChange={handleChange}>
           <option value='ACE'>Ace</option>
           <option value='2'>Two</option>

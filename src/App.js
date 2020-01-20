@@ -10,13 +10,15 @@ class App extends Component {
     this.getHand = this.getHand.bind(this)
     this.sortHand = this.sortHand.bind(this)
     this.setShowCustomHand = this.setShowCustomHand.bind(this)
+    this.setShowResults = this.setShowResults.bind(this)
     this.onCustomHandChange = this.onCustomHandChange.bind(this)
     this.state = {
       'deck': [],
       'hand': [],
       'customHand': [],
       'cardsLeft': 52,
-      'showCustomHand': false
+      'showCustomHand': false,
+      'showResults': false
     }
   }
 
@@ -79,7 +81,8 @@ class App extends Component {
         .then(result => {
           this.setState({
             deck_id: result.deck_id,
-            cardsLeft: result.remaining
+            cardsLeft: result.remaining,
+            showResults: false
           })
           url = 'https://deckofcardsapi.com/api/deck/' + result.deck_id + '/draw/?count=5'
         })
@@ -91,7 +94,8 @@ class App extends Component {
             .then(result => {
               this.setState({
                 hand: result.cards,
-                cardsLeft: result.remaining
+                cardsLeft: result.remaining,
+                showResults: false
               })
             })
         })
@@ -104,7 +108,8 @@ class App extends Component {
         .then(result => {
           this.setState({
             hand: result.cards,
-            cardsLeft: result.remaining
+            cardsLeft: result.remaining,
+            showResults: false
           })
         })
     }
@@ -149,6 +154,14 @@ class App extends Component {
     this.setState({ showCustomHand: !showCustomHand })
   }
 
+  /**
+     * Toggles the value of the 'showResults' state value
+     *
+     */
+  setShowResults() {
+    let showResults = this.state.showResults
+    this.setState({ showResults: !showResults })
+  }
   /**
      * Generates the correct card code based on value and suit
      *
@@ -259,6 +272,8 @@ class App extends Component {
     const cardsLeft = this.state.cardsLeft
     const showCustomHand = this.state.showCustomHand
     const setShowCustomHand = this.setShowCustomHand
+    const showResults = this.state.showResults
+    const setShowResults = this.setShowResults
     const onCustomHandChange = this.onCustomHandChange
 
     let cards
@@ -285,7 +300,7 @@ class App extends Component {
           </React.Fragment>
         </div>
         <CustomHand cards={cards} showCustomHand={showCustomHand} setShowCustomHand={setShowCustomHand} onCustomHandChange={onCustomHandChange} />
-        <Results cards={cards} />
+        <Results cards={cards} showResults={showResults} setShowResults={setShowResults} />
       </div>
     )
   }
